@@ -27,7 +27,10 @@ $this->title = "Mutuelle - ENSP";
                 border-radius: 50px;
             }
             #btn-disconnect {
-                margin: 0px;
+                margin: 5px;
+                position: fixed;
+                bottom: 10px;
+            
             }
         </style>
 
@@ -91,12 +94,8 @@ $this->title = "Mutuelle - ENSP";
                                 <span><?= $this->params['member']->username ?></span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <form action="<?= Yii::getAlias('@member.disconnection')?>" method="post" id="disconnection-form">
-                                <input type="hidden" name="<?=Yii::$app->request->csrfParam?>" value="<?=Yii::$app->request->csrfToken?>"/>
-                            </form>
-                            <button type="button" class="btn btn-primary" id="btn-disconnect" onclick="$('#disconnection-form').submit()">Déconnexion</button>
-                        </li>
+                       
+                            
                     </ul>
 
                 </div>
@@ -114,20 +113,35 @@ $this->title = "Mutuelle - ENSP";
             </div>
 
 
-            <div class="list-group list-group-flush">
-                <a href="<?= Yii::getAlias("@member.home") ?>" class="list-group-item list-group-item-action <?= MemberSessionManager::isHome()?'active':''?> waves-effect">
-                    <i class="fas fa-chart-pie mr-3"></i>Tableau de bord
-                </a>
-                <a href="<?= Yii::getAlias("@member.profil") ?>" class="list-group-item list-group-item-action <?= MemberSessionManager::isProfil()?'active':''?> waves-effect">
-                    <i class="fas fa-user mr-3"></i>Mon profil</a>
-                <a href="<?= Yii::getAlias("@member.members") ?>" class="list-group-item list-group-item-action <?= MemberSessionManager::isMembers()?'active':''?> waves-effect">
-                    <i class="fas fa-users mr-3"></i>Membres</a>
-                <a href="<?= Yii::getAlias("@member.administrators")?>" class="list-group-item list-group-item-action <?= MemberSessionManager::isAdministrators()?'active':''?> waves-effect">
-                    <i class="fas fa-robot mr-3"></i>Administrateurs</a>
-                <a href="<?= Yii::getAlias("@member.typesaide") ?>" class="list-group-item list-group-item-action <?= MemberSessionManager::isHelps()?'active':''?> waves-effect">
-                    <i class="fas fa-hand-holding-heart mr-3"></i>Type d'aides</a>
+            <div class="side-wrapper">
+                <div class="side-title">MAIN MENU</div>
+                    <div class="side-menu">
+                        <a href="<?= Yii::getAlias("@member.home") ?>" class="list-group-item list-group-item-action <?= MemberSessionManager::isHome()?'active':''?> waves-effect">
+                            <i class="fas fa-chart-pie mr-3"></i>Tableau de bord
+                        </a>
+                        <a href="<?= Yii::getAlias("@member.members") ?>" class="list-group-item list-group-item-action <?= MemberSessionManager::isMembers()?'active':''?> waves-effect">
+                            <i class="fas fa-users mr-3"></i>Membres</a>
+                        <a href="<?= Yii::getAlias("@member.administrators")?>" class="list-group-item list-group-item-action <?= MemberSessionManager::isAdministrators()?'active':''?> waves-effect">
+                            <i class="fas fa-robot mr-3"></i>Administrateurs</a>
+                        <a href="<?= Yii::getAlias("@member.typesaide") ?>" class="list-group-item list-group-item-action <?= MemberSessionManager::isHelps()?'active':''?> waves-effect">
+                            <i class="fas fa-hand-holding-heart mr-3"></i>Type d'aides</a>
+                    </div>
             </div>
-
+            <div class="side-wrapper">
+                <div class="side-title">SETTINGS</div>
+                    <div class="side-menu">
+                        <a href="<?= Yii::getAlias("@member.profil") ?>" class="list-group-item list-group-item-action <?= MemberSessionManager::isProfil()?'active':''?> waves-effect">
+                        <i class="fas fa-user mr-3"></i>Mon profil</a>
+                    </div>
+            </div>
+            <div class="side-wrapper">
+                 <div class="side-menu">
+                     <form action="<?= Yii::getAlias('@member.disconnection')?>" method="post" id="disconnection-form">
+                        <input type="hidden" name="<?=Yii::$app->request->csrfParam?>" value="<?=Yii::$app->request->csrfToken?>"/>
+                     </form>
+                     <button type="button" class="btn btn-outline-primary btn-sm" id="btn-disconnect" onclick="$('#disconnection-form').submit()">Déconnexion</button>
+                 </div>
+            </div>
         </div>
         <!-- Sidebar -->
 

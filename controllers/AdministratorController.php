@@ -473,9 +473,6 @@ class AdministratorController extends Controller
                     
                     MailManager::alert_new_member($user,$member);
                     
-
-                
-
                    /*try{
                         Yii::$app->mailer->compose()
                         ->setTo($user->email)

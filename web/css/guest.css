@@ -1,7 +1,7 @@
 body {
     height: 100vh;
 
-    background: linear-gradient(rgba(151, 44, 242, 0.32), rgba(151, 44, 242, 0.32)), linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.51)), url("../img/guest_background.jpg");
+    background: linear-gradient(rgba(151, 44, 242, 0.32), rgba(151, 44, 242, 0.32)), linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.51)), url("../img/WhatsApp Image 2023-01-11 à 05.05.57.jpg");
 }
 
 #icon {
@@ -29,5 +29,5 @@ body {
 }
 
 .nav-item.active {
-    border-bottom: 3px solid greenyellow;
+    border-bottom: 3px solid rgb(165, 227, 226);
 }

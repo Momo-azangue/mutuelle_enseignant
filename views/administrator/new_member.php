@@ -39,8 +39,7 @@ Nouveau membre
 
         <div class="form-group text-right">
             
-        <?= Html::submitButton('Enregistrer', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
-            <!-- <button type="submit" class="btn btn-primary">Enregistrer</button> -->
+         <button type="submit" class="btn btn-primary">Enregistrer</button>
         </div>
         <?php \yii\widgets\ActiveForm::end()?>
 

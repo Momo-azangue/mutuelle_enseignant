@@ -70,7 +70,7 @@ Connexion
                     <label data-error="wrong" data-success="right" for="member-password">Votre mot de passe</label>
                 </div>
                 <div class="reset-password ">
-                    Réinitialiser <?= Html::a('mots de passe', ['guest/request-password-reset']) ?>.
+                    Réinitialiser <?= Html::a('mots de passe', ['guest/request-password-reset']) ?>?
                 </div>
                 <div class="custom-control custom-checkbox mb-4 text-right">
                     <input type="checkbox" class="custom-control-input" name="remember" id="member-rememberMe">
@@ -110,7 +110,7 @@ Connexion
                 </div>
       <!-- attention ici là je dois être attentif -->
                 <div class="reset-password ">
-                    Réinitialiser votre <?= Html::a('mots de passe', ['guest/request-password-reset']) ?>
+                    Réinitialiser votre <?= Html::a('mots de passe', ['guest/request-password-reset']) ?>?
                 </div>
 
                 <div class="custom-control custom-checkbox mb-4 text-right">
