@@ -45,6 +45,7 @@ use Yii;
 use yii\base\Security;
 use yii\data\Pagination;
 use yii\db\Query;
+use yii\debug\models\search\Mail;
 use yii\web\Controller;
 use yii\web\UploadedFile;
 
@@ -111,6 +112,7 @@ class AdministratorController extends Controller
                         $exercise = new Exercise();
                         $exercise->year = (int) (new DateTime())->format("Y");
                         $exercise->save();
+
                     }
                 }
                 else {
@@ -460,18 +462,27 @@ class AdministratorController extends Controller
                     else{
                         $user->avatar=null;
                     }
-                             
-                    $user->save();
-                    
-                    $member = new Member();
-                    $member->administrator_id = $this->administrator->id;
-                    $member->user_id = $user->id;
-                    $member->username = $model->username;
-                    $member->inscription = SettingManager::getInscription();
-                    $member->save();
+                        $user->save();
 
-                    
-                    MailManager::alert_new_member($user,$member);
+                    Yii::$app->mailer->compose()
+                        ->setTo($user->email)
+                        ->setFrom('azanguewill@gmail.com')
+                        ->setSubject('Confirmation d\'inscription')
+                        ->setTextBody('Bonjour, merci de confirmer votre inscription en cliquant sur ce lien : ')
+                        ->send();
+
+                        $member = new Member();
+                        $member->administrator_id = $this->administrator->id;
+                        $member->user_id = $user->id;
+                        $member->username = $model->username;
+                        $member->inscription = SettingManager::getInscription();
+                        $member->save();
+
+
+
+
+                        MailManager::alert_new_member($user,$member);
+
                     
                    /*try{
                         Yii::$app->mailer->compose()

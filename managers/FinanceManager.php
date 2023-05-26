@@ -118,5 +118,7 @@ class FinanceManager
         return $r + self::totalInscriptionAmount();
     }
 
+      public static function agapeAmount(){
 
+      }
 }

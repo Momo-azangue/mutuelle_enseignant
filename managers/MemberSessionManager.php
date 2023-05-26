@@ -87,4 +87,8 @@ class MemberSessionManager
     public static function isAides() {
         return \Yii::$app->session->get(self::head) == "helps";
     }
+    public  static  function isPay(){
+        return \Yii::$app->session->get(self::head) == "Pay";
+
+}
 }

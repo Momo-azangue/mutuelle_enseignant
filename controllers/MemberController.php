@@ -9,6 +9,7 @@
 namespace app\controllers;
 
 use app\managers\MemberSessionManager;
+use app\models\BankAccount;
 use app\models\forms\UpdateSocialInformationForm;
 use app\models\forms\UpdatePasswordForm;
 use app\models\forms\NewMemberForm;
@@ -28,6 +29,7 @@ use app\models\Session;
 use app\models\Help;
 use app\models\Exercise;
 use app\models\Borrowing;
+use Stripe\StripeClient;
 use yii\web\Controller;
 use yii\web\UploadedFile;
 use DateTime;
@@ -35,6 +37,9 @@ use Yii;
 use yii\base\Security;
 use yii\data\Pagination;
 use app\managers\FileManager;
+use yii\web\Response;
+use Stripe\Stripe;
+use Stripe\Charge;
 
 class MemberController extends Controller
 {
@@ -371,5 +376,37 @@ class MemberController extends Controller
         else
             return RedirectionManager::abort($this);
     }
+/**************************payement***************************************************************/
 
+    public function  actionPay(){
+
+        $model = new  BankAccount();
+        if($model->load(Yii::$app->request->post()) && $model->validate()) {
+            Stripe::setApiKey(Yii::$app->params['stripeSecretKey']);
+
+            try {
+                $charge = Charge::create([
+                    'amount' => 1000,
+                    'currency' => 'xaf',
+                    'source' => $model->cardNumber,
+                    'description' => 'paiment pour le fond social',
+                ]);
+                Yii::$app->session->setFlash('success', 'paiement reussi !');
+                    return  $this ->redirect(['member/success', 'transactionNumber'=> $charge->id]);
+
+            } catch (\Stripe\Execption\CardExecption $e) {
+                Yii::$app->session->setFlash('error', $e->getMessage());
+                return  $this->redirect(['member/error']);
+            }
+
+        }
+        return $this->render('pay', [
+            'model' => $model,
+        ]);
+    }
+
+
+    public function  actionSuccess(){
+        return $this->render('success');
+    }
 }

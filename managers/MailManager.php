@@ -19,7 +19,20 @@ use app\models\User;
 class MailManager
 {
 
-    public static $from = "medricsonwa12@gmail.com";
+    public static $from = "azanguewill@gmail.com";
+
+    public static function  confirmation_new_member(User $user) {
+        try{
+            \Yii::$app->mailer->compose('confirmation_new_member', compact('user'))
+                ->setFrom(self::$from)
+                ->setTo($user->email)
+                ->setSubject('Confirmation d\'inscription')
+                ->setTextBody('Bonjour, merci de confirmer votre inscription à la mutuelle des enseignants de Polytechnique Yaoundé en cliquant sur ce lien : ' . Url::to(['site/confirm', 'code' => $model->confirmation_code], true))
+                ->send();
+        }catch (\Exception $exception){
+
+        }
+    }
 
     public static function alert_new_member(User $user,Member $member) {
         try {

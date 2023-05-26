@@ -1,11 +1,19 @@
 'mail' => array(
-				'class' => 'ext.yii-mail.YiiMail',
+				'class' => 'yii\swiftmailer\Mailer',
+                'useFileTransport' => false,
 				'transportType'=>'smtp',
-				'transportOptions'=>array(
-						'host'=>'<hostanme>',
-						'username'=>'<username>',
-						'password'=>'<password>',
-						'port'=>'25',						
+				'transport'=>array(
+                        'class' => 'Swift_SmtpTransport',
+						'host'=>'smtp.gmail.com',
+						'username'=>'azanguewill@gmail.com',
+						'password'=>'hszkplyonwzizggk',
+						'port'=>'25',
+                        'encryption' => 'tls',
 				),
-				'viewPath' => 'application.views.mail',				
+				'viewPath' => 'application.views.mail',
 		),
+
+'params' => [
+            'maxExecutionTime' => 120,
+            ],
+

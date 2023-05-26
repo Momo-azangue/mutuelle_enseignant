@@ -36,9 +36,9 @@ $config = [
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
                 'host' => 'smtp.gmail.com',
-                'username' => 'medricsonwa12@gmail.com',
-                'password' => 'Medric@Sonwa12',
-                'port' => '587',
+                'username' => 'azangewill@gmail.com',
+                'password' => 'hszkplyonwzizggk',
+                'port' => '25',
                 'encryption' => 'tls',
             ],
             'useFileTransport' => false,
@@ -67,6 +67,11 @@ $config = [
         ],
 
         'routes' => $routes,
+
+        'stripe' => [
+            'class' => 'yii\stripe\Stripe',
+            ],
+
     ],
     'params' => $params,
 ];
