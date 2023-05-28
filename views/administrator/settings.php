@@ -53,8 +53,7 @@
                 \yii\widgets\ActiveForm::end();
                 ?>
 
+
             </div>
         </div>
-    </div>
-
 </div>

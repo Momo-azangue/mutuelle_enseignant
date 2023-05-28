@@ -20,6 +20,7 @@ use app\models\Borrowing;
 use app\models\BorrowingSaving;
 use app\models\Contribution;
 use app\models\Exercise;
+use app\models\forms\AgapeForm;
 use app\models\forms\HelpTypeForm;
 use app\models\forms\IdForm;
 use app\models\forms\NewAdministratorForm;
@@ -1385,6 +1386,7 @@ class AdministratorController extends Controller
         $model->interest = SettingManager::getInterest();
         $model->social_crown = SettingManager::getSocialCrown();
         $model->inscription = SettingManager::getInscription();
+
         return $this->render("settings",compact("model"));
     }
 /*****************************Appliquer les configurations ********************************************************* */
@@ -1413,4 +1415,12 @@ class AdministratorController extends Controller
         endif;
     }
 
+
+    public  function  actionAgape(){
+    Administrator::setAgapes();
+    $model = new AgapeForm();
+    $model->agape = SettingManager::getAgape();
+    return  $this->render("agape",compact("model"));
+
+    }
 }

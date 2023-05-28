@@ -85,7 +85,7 @@ $this->title = "Mutuelle - ENSP";
                             <a class="nav-link waves-effect  <?= MemberSessionManager::isAides()?'blue-text':''?>" href="<?= Yii::getAlias("@member.helps") ?>">Aides</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link waves-effect  <?= MemberSessionManager::isPay()?'blue-text':''?>" >payer</a>
+                            <a class="nav-link waves-effect  <?= MemberSessionManager::isPay()?'blue-text':''?>" href="<?= Yii::getAlias("@member.payer")?>" >payer</a>
                         </li>
                     </ul>
 

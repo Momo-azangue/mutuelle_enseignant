@@ -5,6 +5,10 @@ namespace app\models;
 
 use \yii\base\Model;
 
+use Stripe\Stripe;
+
+use Luhn\Luhn;
+
 class BankAccount extends Model {
 
     public $email;
@@ -27,7 +31,7 @@ class BankAccount extends Model {
             'cardNumber' => 'Numéro sur la carte ',
             'expirationDate' => 'Date d\'Expiration',
             'cvc' => ' CVC',
-            'nameOnCard' => 'Name on card '
+            'nameOnCard' => 'Nom sur la carte '
 
         ];
     }
@@ -39,7 +43,34 @@ class BankAccount extends Model {
 
             // the email attribute should be a valid email address
             ['email', 'email'],
+            ['cardNumber', 'validateCardNumber'],
+            ['expirationDate','validateExpiration'],
+            ['cvc','validateCvc']
         ];
     }
 
+    public function validateCardNumber($attribute, $params){
+        $cardNumber = $this->$attribute;
+        $luhn = new Luhn();
+        if(!$luhn->isValid($cardNumber)){
+            $this->addError($attribute, 'Numéro de carte invalide.');
+        }
+    }
+    public  function  validateExpiration($attribute, $params){
+        $expirationDate = $this->$attribute;
+        $luhn = new Luhn();
+        if(!$luhn->isValid($expirationDate)){
+            $this->addError($attribute, 'Date d\'expiration invalide.');
+        }
+    }
+
+    public  function  validateCvc($attribute, $params){
+        $cvc = $this->$attribute;
+
+        $luhn = new Luhn();
+
+        if(!$luhn->isValid($cvc)){
+            $this->addError($attribute, 'Code CVC invalide.');
+        }
+    }
 }

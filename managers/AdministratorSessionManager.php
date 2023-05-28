@@ -44,7 +44,11 @@ class AdministratorSessionManager
         \Yii::$app->session->set(self::place,"settings");
         \Yii::$app->session->set(self::head,null);
     }
+    public static  function setAgapes(){
+        \Yii::$app->session->set(self::place, "agape");
+        \Yii::$app->session->set(self::head,null);
 
+    }
 
     public static function isHeadHome() {
         return \Yii::$app->session->get(self::head) == "home";
