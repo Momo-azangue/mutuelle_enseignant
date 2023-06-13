@@ -1077,6 +1077,9 @@ class AdministratorController extends Controller
                 $help_type = HelpType::findOne($model->help_type_id);
 
                 if ($member && $help_type && $member->active) {
+                    //vérifier si le membre a déjà fait un emprunt
+                    if(!Borrowing::findOne(['member_id'=> $member->id, 'state' => true])){
+
                     if ( $d1 <= $d2 + 86400000*30) {
                         $help = new Help();
                         $help->limit_date = $model->limit_date;
@@ -1110,9 +1113,14 @@ class AdministratorController extends Controller
                         $model->addError("limit_date","Le délai minimum est d'un mois");
                         return $this->render("new_help",compact("model"));
                     }
+
+                    }else
+                        $model->addError("member_id","ce membre a doit rembourser son emprunt avant de bénéficier d'une aide");
+                        return  $this->render("new_help", compact("model"));
                 }
                 else
                     return RedirectionManager::abort($this);
+
             }
             else
                 return $this->render("new_help",compact("model"));
