@@ -24,6 +24,8 @@ Type d'aide
 </style>
 <?php $this->endBlock()?>
     <?php if (count($helpTypes)):?>
+        <br>
+        <br>
     <div class="row">
         <div class="col-12 white-block">
             <div class="row table-head py-2">

@@ -53,6 +53,7 @@ Mes emprunts
                             <th>Montant restant</th>
                             <th>Administrateur</th>
                             <th>Session d'emprunt</th>
+                            <th>Date d'écheance</th>
                         </tr>
 
                         </thead>
@@ -76,6 +77,7 @@ Mes emprunts
                                     <td class="text-secondary"><?= $rest?$rest:0 ?> XAF</td>
                                     <td class="text-capitalize"><?= $administrator->name." ". $administrator->first_name ?></td>
                                     <td><?= $session->date() ?></td>
+                                    <td> <?= $session->date_d_écheance_emprunt() ?></th>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

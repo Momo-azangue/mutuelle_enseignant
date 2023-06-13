@@ -108,6 +108,7 @@ $this->beginBlock('title') ?>
                                 <th>Intérêt</th>
                                 <th>Net à payer</th>
                                 <th>Administrateur</th>
+                                <th>Date D'échéance</th>
                             </tr>
 
                             </thead>
@@ -128,6 +129,7 @@ $this->beginBlock('title') ?>
                                     <td><?= $borrowing->interest ?> %</td>
                                     <td><?= $borrowing->intendedAmount() ?> XAF</td>
                                     <td class="text-capitalize"><?= $administratorUser->name . " " . $administratorUser->first_name ?></td>
+                                    <td><?= $session->date_d_écheance_emprunt() ?></td>
                                 </tr>
 
                                 <div class="modal fade" id="modalS<?= $borrowing->id ?>" tabindex="-1" role="dialog"

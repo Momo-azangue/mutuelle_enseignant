@@ -33,6 +33,14 @@ class Session extends ActiveRecord
     public function date() {
         return (new \DateTime($this->date))->format("d-m-Y");
     }
+    public function date_d_écheance_emprunt(){
+
+       $date = new \DateTime($this->date);
+       $date->add(new \DateInterval('P3M'));
+
+        return $date->format("d-m-Y");
+
+    }
 
     public function number() {
         $exercise = $this->exercise();
