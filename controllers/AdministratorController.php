@@ -348,7 +348,10 @@ class AdministratorController extends Controller
     }
 
 
-/*****deconnexion de l'administration  */
+/*****deconnexion de l'administration  ***********************************************************
+ *
+ * important
+ */
     public function actionDeconnexion() {
         if (\Yii::$app->request->post()) {
             \Yii::$app->user->logout();
@@ -1430,16 +1433,6 @@ class AdministratorController extends Controller
         endif;
     }
 
-/*****
-   public  function  actionAgape()
-    {
-        AdministratorSessionManager::setAgapes();
-        $model1 = new AgapeForm();
-        $model1->agape = SettingManager::getAgape();
-        return $this->render("settings",compact("model1"));
-
-    }
-*****/
 /**************************************Appliquer Agape***************************************************************/
     public function actionAppliquerAgape()
     {

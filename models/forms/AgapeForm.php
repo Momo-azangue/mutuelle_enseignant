@@ -15,13 +15,13 @@ class AgapeForm extends Model
 
             //Créez une nouvelle instance de la classe Agape
             $agape = new Agape();
-            $agape->value = $this->agape;
+            $agape->amount = $this->agape;
 
             //sauvegardez l'objet Agape dans la base de données
             $agape->save();
 
             //Retournez l'ID de l'objet Agape sauvegardé
-            return $agape->id;
+            return $agape->agape_id;
         } else {
             return false;
         }

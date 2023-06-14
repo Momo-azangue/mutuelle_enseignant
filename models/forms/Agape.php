@@ -13,8 +13,8 @@ class Agape extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['value'], 'required'],
-            [['value'], 'integer'],
+            [['amount'], 'required'],
+            [['amount'], 'integer'],
         ];
     }
 

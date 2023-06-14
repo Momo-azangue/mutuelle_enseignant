@@ -142,9 +142,30 @@ $this->title = "Mutuelle - ENSP";
                      <form action="<?= Yii::getAlias('@member.disconnection')?>" method="post" id="disconnection-form">
                         <input type="hidden" name="<?=Yii::$app->request->csrfParam?>" value="<?=Yii::$app->request->csrfToken?>"/>
                      </form>
-                     <button type="button" class="btn btn-outline-primary btn-sm" id="btn-disconnect" onclick="$('#disconnection-form').submit()">Déconnexion</button>
+                     <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#btn-disconnect" >Déconnexion</button>
                  </div>
             </div>
+            <div class="modal  fade" id="btn-disconnect" tabindex="-1" role="dialog"
+                 aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+
+                            <p class="text-center">Êtes-vous sûr(e) de vouloir vous déconnecter?
+                            </p>
+
+                            <div class="form-group text-center">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Non</button>
+                                <button class="btn btn-primary" onclick="$('#disconnection-form').submit()">oui</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
         </div>
         <!-- Sidebar -->
 
