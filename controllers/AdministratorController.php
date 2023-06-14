@@ -21,6 +21,7 @@ use app\models\BorrowingSaving;
 use app\models\Contribution;
 use app\models\Exercise;
 use app\models\forms\AgapeForm;
+use app\models\forms\Agape;
 use app\models\forms\HelpTypeForm;
 use app\models\forms\IdForm;
 use app\models\forms\NewAdministratorForm;
@@ -1395,8 +1396,13 @@ class AdministratorController extends Controller
         $model->social_crown = SettingManager::getSocialCrown();
         $model->inscription = SettingManager::getInscription();
 
+        AdministratorSessionManager::setAgapes();
+        $agapeForm = new AgapeForm();
+        $agapeForm->agape = SettingManager::getAgape();
 
-        return $this->render("settings",compact("model"));
+
+
+        return $this->render("settings",compact("model", "agapeForm"));
     }
 /*****************************Appliquer les configurations ********************************************************* */
     public function actionAppliquerConfiguration() {
@@ -1424,30 +1430,34 @@ class AdministratorController extends Controller
         endif;
     }
 
-
+/*****
    public  function  actionAgape()
     {
         AdministratorSessionManager::setAgapes();
-        $model = new AgapeForm();
-        $model->agape = SettingManager::getAgape();
-        return $this->render("settings",compact("model"));
+        $model1 = new AgapeForm();
+        $model1->agape = SettingManager::getAgape();
+        return $this->render("settings",compact("model1"));
 
     }
-
+*****/
 /**************************************Appliquer Agape***************************************************************/
     public function actionAppliquerAgape()
     {
         if (Yii::$app->request->getIsPost()) {
 
-            $model1 = new AgapeForm();
-            if ($model1->load(Yii::$app->request->post()) && $model1->validate()) {
+            $agapeForm = new AgapeForm();
+            if ($agapeForm->load(Yii::$app->request->post()) && $agapeForm->validate()) {
 
-                SettingManager::setvaluesAgape($model1->agape);
+                $agapeForm->save();
+
+                SettingManager::setvaluesAgape($agapeForm->agape);
+
+
 
                 return $this->redirect("@administrator.settings");
 
             } else
-                return $this->render("settings", compact("model1"));
+                return $this->render("settings", compact("agapeForm"));
         } else
             return RedirectionManager::abort($this);
 

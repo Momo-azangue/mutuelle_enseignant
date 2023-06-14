@@ -15,7 +15,7 @@ class m230613_230745_create_agape_table extends Migration
         $this->createTable('agape', [
             'agape_id' => $this->primaryKey()->unsigned(),
             'amount' => $this->integer(10)->unsigned(),
-            'created_at' => $this->dateTime()->defaultExpression('CURRENT_TIMESTAMP')
+
 
 
         ]);
