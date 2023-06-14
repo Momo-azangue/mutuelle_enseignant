@@ -9,6 +9,7 @@
 namespace app\models;
 
 
+use app\models\forms\Agape;
 use yii\db\ActiveRecord;
 
 class Session extends ActiveRecord
@@ -28,6 +29,10 @@ class Session extends ActiveRecord
 
     public function refundedAmount()  {
         return Refund::find()->where(['session_id' => $this->id])->sum('amount');
+    }
+
+    public function agapeAmount(){
+        return Agape::find()->where(['session_id' => $this->id])->sum('amount');
     }
 
     public function date() {
