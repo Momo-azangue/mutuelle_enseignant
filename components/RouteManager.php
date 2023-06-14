@@ -85,6 +85,7 @@ class RouteManager {
 
         'administrator.settings' => '/administrator/configurations',
         'administrator.apply_settings' => '/administrator/appliquer-configuration',
+        'administrator.apply_agape' => '/administrator/appliquer-agape',
 
         // ============================ ESPACE MEMBRE =================================
         'member.home' => '/member/accueil',

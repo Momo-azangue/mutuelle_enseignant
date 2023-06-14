@@ -32,21 +32,29 @@ class SettingManager
     }
 
     public static function getAgape() {
-        $json_source = file_get_contents(\Yii::$app->getBasePath().'/managers/app.json');
+        $json_source = file_get_contents(\Yii::$app->getBasePath().'/managers/app2.json');
         $data = json_decode($json_source,true);
 
         return $data['agape'];
     }
 
-    public static function setValues($interest,$social_crown,$inscription,$agape) {
+    public static function setValues($interest,$social_crown,$inscription) {
         $data = [
             'interest'=>$interest,
             'social_crown'=>$social_crown,
             'inscription'=>$inscription,
-            'agape'=>$agape
         ];
 
         file_put_contents(\Yii::$app->getBasePath().'/managers/app.json',json_encode($data));
+
+    }
+
+    public static function setvaluesAgape($agape){
+        $data = [
+            'agape'=> $agape,
+        ];
+
+        file_put_contents(\Yii::$app->getBasePath().'/managers/app2.json',json_encode($data));
 
     }
 }

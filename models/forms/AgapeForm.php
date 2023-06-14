@@ -2,7 +2,9 @@
 
 namespace app\models\forms;
 
-class AgapeForm extends \yii\base\Model
+use yii\base\Model;
+
+class AgapeForm extends Model
 {
     public  $agape;
 

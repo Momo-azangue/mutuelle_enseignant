@@ -1395,6 +1395,7 @@ class AdministratorController extends Controller
         $model->social_crown = SettingManager::getSocialCrown();
         $model->inscription = SettingManager::getInscription();
 
+
         return $this->render("settings",compact("model"));
     }
 /*****************************Appliquer les configurations ********************************************************* */
@@ -1424,11 +1425,32 @@ class AdministratorController extends Controller
     }
 
 
-    public  function  actionAgape(){
-    Administrator::setAgapes();
-    $model = new AgapeForm();
-    $model->agape = SettingManager::getAgape();
-    return  $this->render("agape",compact("model"));
+   public  function  actionAgape()
+    {
+        AdministratorSessionManager::setAgapes();
+        $model = new AgapeForm();
+        $model->agape = SettingManager::getAgape();
+        return $this->render("settings",compact("model"));
+
+    }
+
+/**************************************Appliquer Agape***************************************************************/
+    public function actionAppliquerAgape()
+    {
+        if (Yii::$app->request->getIsPost()) {
+
+            $model1 = new AgapeForm();
+            if ($model1->load(Yii::$app->request->post()) && $model1->validate()) {
+
+                SettingManager::setvaluesAgape($model1->agape);
+
+                return $this->redirect("@administrator.settings");
+
+            } else
+                return $this->render("settings", compact("model1"));
+        } else
+            return RedirectionManager::abort($this);
 
     }
 }
+
