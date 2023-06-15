@@ -13,9 +13,6 @@ use yii\helpers\Html;
     <title><?= Html::encode($this->title) ?></title>
 
 
-    <?php if (isset($this->blocks['style'])): ?>
-        <?= $this->blocks['style'] ?>
-    <?php endif; ?>
 
     <?php $this->head() ?>
 </head>
