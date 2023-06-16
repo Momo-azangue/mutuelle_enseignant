@@ -468,13 +468,20 @@ class AdministratorController extends Controller
                         $user->avatar=null;
                     }
                         $user->save();
+                   /** try{
 
-                    Yii::$app->mailer->compose()
-                        ->setTo($user->email)
-                        ->setFrom('azanguewill@gmail.com')
-                        ->setSubject('Confirmation d\'inscription')
-                        ->setTextBody('Bonjour, merci de confirmer votre inscription en cliquant sur ce lien : ')
-                        ->send();
+
+                        if ($model->load(Yii::$app->request->post()) && $model->inscriptionmail(Yii::$app->params['adminEmail']))
+                        {
+                            Yii::$app->session->setFlash('contactFormSubmitted');
+
+                            return $this->refresh();
+                        }
+                    }catch (Swift_TransportException $e){
+
+                        return $this->redirect('@administrator.members');
+
+                    }**/
 
                         $member = new Member();
                         $member->administrator_id = $this->administrator->id;
@@ -483,10 +490,7 @@ class AdministratorController extends Controller
                         $member->inscription = SettingManager::getInscription();
                         $member->save();
 
-
-
-
-                        MailManager::alert_new_member($user,$member);
+                        /***MailManager::alert_new_member($user,$member);****/
 
                     
                    /*try{

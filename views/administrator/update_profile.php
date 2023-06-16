@@ -1,3 +1,4 @@
+
 <?php $this->beginBlock('title') ?>
 Profil
 <?php $this->endBlock()?>
@@ -27,18 +28,23 @@ Profil
         <?= $form1->field($socialModel,'avatar')->fileInput();?>
 
         <div class="form-group text-right">
-            <button class="btn-primary btn" data-toggle="modal" data-target="#changePassword" >Modifier mot de passe</button>
+
             <button type="submit" class="btn btn-primary">Enregistrer</button>
+
+        </div>
+        <?php \yii\widgets\ActiveForm::end()?>
+        <div class="form-group text-right">
+            <button class="btn-primary btn" data-toggle="modal" data-target="#changePassword" >Modifier mot de passe</button>
         </div>
 
-        <?php \yii\widgets\ActiveForm::end()?>
 
     </div>
 </div>
+
 <div class="modal fade" id="changePassword" tabindex="-1" role="dialog" aria-labelledby="changePasswordLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document" style="background-color: #fff;">
-        <?php $form2 = \yii\widgets\ActiveForm::begin(['method' => 'post',
-                'action' =>  '@administrator.update_social_information',
+            <div class="col-3 mt-5 m-auto"  style="background-color: #fff;">
+            <?php $form2 = \yii\widgets\ActiveForm::begin(['method' => 'post',
+                'action' =>  '@administrator.update_password',
                 'options' => ['enctype' => 'multipart/form-data','class' => 'modal-body'],
                 'errorCssClass' => 'text-secondary'
             ])?>

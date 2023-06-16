@@ -14,6 +14,11 @@ Nouveau membre
 </style>
 <?php $this->endBlock()?>
 
+<?php if (Yii::$app->session->hasFlash('contactFormSubmitted')): ?>
+
+    <?php  echo "<div class='alert alert-success'>".Yii::$app->session->getFlash('success', "le membre doit confirmer ")."<div>"; ?>
+
+<?php else: ?>
 
 <div class="container mt-5 mb-5">
     <div class="row justify-content-center">
@@ -38,11 +43,13 @@ Nouveau membre
         <?= $form->field($model,'password')->input('password')->label('Mot de passe') ?>
 
         <div class="form-group text-right">
-            
-         <button type="submit" class="btn btn-primary">Enregistrer</button>
+
+            <?= Html::submitButton('Enregistrer', ['class' => 'btn btn-primary', 'name' => 'NewMember-button']) ?>
+
         </div>
         <?php \yii\widgets\ActiveForm::end()?>
 
     </div>
 
 </div>
+<?php endif; ?>

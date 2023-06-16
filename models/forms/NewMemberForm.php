@@ -71,7 +71,7 @@ class NewMemberForm extends Model
      * @param User $user user model to with email should be send
      * @return bool whether the email was sent
      */
-    protected function sendEmail($user)
+    public function sendEmail($user)
     {
         return Yii::$app
             ->mailer
@@ -90,25 +90,34 @@ class NewMemberForm extends Model
      * @param string $email the target email address
      * @return bool whether the model passes validation
      */
-    public function inscriptionMember($email)
+
+   /*** public function inscriptionMember($email)
     {
 
         $content = "<p>Email:" . $this->email . "</p>";
         $content .= "<p>Name:" . $this->name . "</p>";
-        $content .= "<p>Subject:" . $this->subject . "</p>";
-        $content .= "<p>Body:" . $this->body . "</p>";
+
 
         if ($this->validate()) {
             Yii::$app->mailer->compose("@app/mail/layouts/html", ["content" => $content])
                 ->setTo($email)
                 ->setFrom([Yii::$app->params['senderEmail'] => Yii::$app->params['senderName']])
                 ->setReplyTo([$this->email => $this->name])
-                ->setSubject($this->subject)
-                ->setTextBody($this->body)
                 ->send();
 
             return true;
         }
         return false;
+    }***/
+
+
+    public function inscriptionmail($email)
+    {
+        return Yii::$app->mailer->compose()
+            ->setTo($email)
+            ->setFrom([Yii::$app->params['senderEmail'] => Yii::$app->params['senderName']])
+            ->send();
     }
+
+
 }
