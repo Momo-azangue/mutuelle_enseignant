@@ -138,6 +138,9 @@ $this->title = "Mutuelle - ENSP";
                             <i class="fas fa-robot mr-3"></i>Administrateurs</a>
                         <a href="<?= Yii::getAlias("@administrator.help_types") ?>" class="list-group-item list-group-item-action <?= AdministratorSessionManager::isHelps()?'active':''?> waves-effect">
                             <i class="fas fa-hand-holding-heart mr-3"></i>Type d'aides</a>
+
+                        <a href="<?= Yii::getAlias("@administrator.tontine_types") ?>" class="list-group-item list-group-item-action <?= AdministratorSessionManager::isTontine()?'active':''?> waves-effect">
+                            <i class="fas fa-coins mr-3"></i>Les Tontines</a>
                     </div> 
                           
             </div>

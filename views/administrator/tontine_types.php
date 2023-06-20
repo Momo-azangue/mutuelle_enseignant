@@ -64,4 +64,4 @@ Type d'aide
 
 </div>
 
-<a href="<?= Yii::getAlias("@administrator.new_help_type") ?>" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i></a>
+<a href="<?= Yii::getAlias("@administrator.new_tontine_type") ?>" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i></a>

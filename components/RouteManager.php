@@ -28,17 +28,17 @@ class RouteManager {
 
 
         'administrator.tontine_types' => '/administrator/types-tontine',
-        'administrator.new_tontine_type' => '/administrator/nouveau-type-aide',
+        'administrator.new_tontine_type' => '/administrator/nouveau-type-tontine',
         'administrator.update_tontine_type' => '/administrator/modifier-type-tontine',
-        'administrator.add_tontine_type' => '/administrator/ajouter-type-aide',
-        'administrator.apply_tontine_type_update' => '/administrator/appliquer-modification-type-aide',
-        'administrator.delete_tontine_type' => '/administrator/supprimer-type-aide',
+        'administrator.add_tontine_type' => '/administrator/ajouter-type-tontine',
+        'administrator.apply_tontine_type_update' => '/administrator/appliquer-modification-type-tontine',
+        'administrator.delete_tontine_type' => '/administrator/supprimer-type-tontine',
         'administrator.tontines' => '/administrator/tontines',
-        'administrator.new_tontine' => '/administrator/nouvelle-aide',
-        'administrator.add_tontine' => '/administrator/ajouter-aide',
-        'administrator.tontine_details' => '/administrator/details-aide',
+        'administrator.new_tontine' => '/administrator/nouvelle-tontine',
+        'administrator.add_tontine' => '/administrator/ajouter-tontine',
+        'administrator.tontine_details' => '/administrator/details-tontine',
 
-        'administrator.delete_tontine' => '/administrator/supprimer-aide',
+        'administrator.delete_tontine' => '/administrator/supprimer-tontine',
 
 
 

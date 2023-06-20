@@ -1668,7 +1668,7 @@ class AdministratorController extends Controller
     public function actionNouvelleContributionTontine($q = 0)
     {
         if ($q) {
-            $tontine = Help::findOne($q);
+            $tontine = Tontine::findOne($q);
             if ($tontine && $tontine->state) {
                 $model = new NewContributionForm();
                 $model->tontine_id = $q;
@@ -1713,32 +1713,77 @@ class AdministratorController extends Controller
     }
 
     /******************************aide du côté Administrateur *************************************************** */
-    public function actionAides()
+
+
+    public function actionAppliquerModificationTypeTontine()
     {
-        AdministratorSessionManager::setHome("help");
+        if (Yii::$app->request->getIsPost()) {
+            $model = new TontineTypeForm();
 
-        $activeHelps = Help::findAll(['state' => true]);
-
-        $query = Help::find()->where(['state' => false])->orderBy('created_at', SORT_DESC);
-
-        $pagination = new Pagination([
-            'defaultPageSize' => 9,
-            'totalCount' => $query->count(),
-        ]);
-
-        $helps = $query
-            ->offset($pagination->offset)
-            ->limit($pagination->limit)
-            ->all();
-
-        return $this->render("helps", compact("helps", 'pagination', "activeHelps"));
+            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+                $tontineType = HelpTypeForm::findOne($model->id);
+                $tontineType->title = $model->title;
+                $tontineType->amount = $model->amount;
+                $tontineType->save();
+                return $this->render('update_tontine_type', compact('model'));
+            } else {
+                return $this->render('update_tontine_type', compact('model'));
+            }
+        } else
+            return RedirectionManager::abort($this);
     }
 
+    public function actionSupprimerTypeTontine()
+    {
+        if (Yii::$app->request->getIsPost()) {
+            $model = new HelpTypeForm();
+            $model->load(Yii::$app->request->post());
+            if ($model->id) {
+                $helpType = HelpType::findOne($model->id);
+                if ($helpType) {
+                    $helpType->active = false;
+                    $helpType->delete();
+                    return $this->redirect("@administrator.help_types");
+                } else
+                    return RedirectionManager::abort($this);
+            } else
+                return RedirectionManager::abort($this);
+        } else
+            return RedirectionManager::abort($this);
+    }
 
+    public function actionNouveauTypeTontine()
+    {
+        AdministratorSessionManager::setHelps();
+        $model = new TontineTypeForm();
+        return $this->render('new_tontine_type', compact('model'));
+    }
 
+    public function actionAjouterTypeTontine()
+    {
+        if (\Yii::$app->request->getIsPost()) {
+            $model = new TontineTypeForm();
 
+            $newModel = new TontineType();
 
+            if ($model->load(Yii::$app->request->post()) && $newModel->validate()) {
+                $tontineType = new TontineType();
+                $tontineType->title = $model->title;
+                $tontineType->amount = $model->amount;
+                $tontineType->save();
+                if ($tontineType->save()) {
+                    Yii::$app->session->setFlash('success', "Type de Tontine créé avec succès");
+                } else {
+                    Yii::$app->session->setFlash('error', "Ce type de tontine existe déjà");
+                }
+                return $this->redirect('@administrator.tontine_types');
+            } else
+                return $this->render('new_tontine_type', compact('model'));
 
+        } else {
+            return RedirectionManager::abort($this);
+        }
+    }
 
 
 
