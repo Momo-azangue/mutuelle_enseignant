@@ -73,7 +73,7 @@
                     ])
                     ?>
 
-                    <?= $formAgape->field($agapeForm,'agape')->input("number",['required'=> 'required'])->label('entrez le montant de l\'agape') ?>
+                    <?= $formAgape->field($agapeForm,'amount')->input("number",['required'=> 'required'])->label('entrez le montant de l\'agape') ?>
 
 
                     <div class="form-group text-right">

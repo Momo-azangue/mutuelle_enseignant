@@ -40,6 +40,10 @@ class AdministratorSessionManager
         \Yii::$app->session->set(self::place,"helps");
         \Yii::$app->session->set(self::head,null);
     }
+    public static function setTontine() {
+        \Yii::$app->session->set(self::place,"tontine");
+        \Yii::$app->session->set(self::head,null);
+    }
     public static function setSettings() {
         \Yii::$app->session->set(self::place,"settings");
         \Yii::$app->session->set(self::head,null);
@@ -64,6 +68,9 @@ class AdministratorSessionManager
     }
     public static function isHeadHelp() {
         return \Yii::$app->session->get(self::head) == "help";
+    }
+    public static function isHeadTontine() {
+        return \Yii::$app->session->get(self::head) == "tontine";
     }
     public static function isHeadSession() {
         return \Yii::$app->session->get(self::head) == "session";
@@ -99,5 +106,8 @@ class AdministratorSessionManager
     public static function isSettings()
     {
         return \Yii::$app->session->get(self::place) == "settings";
+    }
+    public static function isTontine() {
+        return \Yii::$app->session->get(self::place) == "tontine";
     }
 }

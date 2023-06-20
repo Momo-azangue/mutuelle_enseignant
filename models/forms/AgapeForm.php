@@ -2,37 +2,42 @@
 
 namespace app\models\forms;
 
+use app\models\Agape;
 use yii\base\Model;
 
 
 class AgapeForm extends Model
 {
-    public  $agape;
+    public  $amount;
+    public  $session_id;
 
 
-    public  function save(){
-        if($this->validate()){
-
-            //Créez une nouvelle instance de la classe Agape
+    public function save()
+    {
+        if ($this->validate()) {
             $agape = new Agape();
-            $agape->amount = $this->agape;
+            $agape->amount = $this->amount;
+            $agape->session_id = $this->session_id;
 
-            //sauvegardez l'objet Agape dans la base de données
-            $agape->save();
-
-            //Retournez l'ID de l'objet Agape sauvegardé
-            return $agape->agape_id;
+            if ($agape->save()) {
+                return $agape->agape_id;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
     }
 
 
+
     public function rules()
     {
         return [
-            [['agape'],'required','message' => 'Ce champ est obligatoire'],
-            [['agape'],'integer','min' => 1,'message' => 'Ce champ attend un entier positif']
+            [['session_id' ],'required','message' => 'Ce champ est obligatoire'],
+            [['session_id'],'integer','min' => 1,'message' => 'Ce champ attend une entier positif'],
+            [['amount'],'required','message' => 'Ce champ est obligatoire'],
+            [['amount'],'integer','min' => 1,'message' => 'Ce champ attend un entier positif']
         ];
     }
 }

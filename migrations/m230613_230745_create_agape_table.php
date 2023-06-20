@@ -19,8 +19,6 @@ class m230613_230745_create_agape_table extends Migration
             'session_id' => $this->integer()->unsigned(),
         ]);
 
-        $this->addForeignKey('fk-agape-session_id', 'agape','session_id','session','id','CASCADE', 'CASCADE');
-
     }
 
     /**
@@ -28,7 +26,7 @@ class m230613_230745_create_agape_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropForeignKey('fk-agape-session_id', 'agape');
+
         $this->dropTable('agape');
     }
 }

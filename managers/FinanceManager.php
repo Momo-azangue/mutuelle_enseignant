@@ -9,6 +9,7 @@
 namespace app\managers;
 
 
+use app\models\Agape;
 use app\models\Borrowing;
 use app\models\Exercise;
 use app\models\Help;
@@ -17,7 +18,6 @@ use app\models\Refund;
 use app\models\Saving;
 use app\models\Session;
 use app\models\User;
-use app\models\forms\Agape;
 
 class FinanceManager
 {
@@ -120,6 +120,13 @@ class FinanceManager
     }
 
       public static function agapeAmount(){
+          $exercise = Exercise::findOne(['active' => true]);
+          if ($exercise){
+              $sessions = Session::find()->select('id')->where(['exercise_id' => $exercise->id])->column();
+              return Agape::find()->where(['session_id' => $sessions])->sum('amount') ;
+          }
+          else
+              return 0;
 
       }
 }

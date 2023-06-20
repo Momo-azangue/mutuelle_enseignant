@@ -26,6 +26,23 @@ class RouteManager {
         'administrator.update_social_information' => '/administrator/modifier-information-sociale',
         'administrator.update_password' => '/administrator/modifier-mot-de-passe',
 
+
+        'administrator.tontine_types' => '/administrator/types-tontine',
+        'administrator.new_tontine_type' => '/administrator/nouveau-type-aide',
+        'administrator.update_tontine_type' => '/administrator/modifier-type-tontine',
+        'administrator.add_tontine_type' => '/administrator/ajouter-type-aide',
+        'administrator.apply_tontine_type_update' => '/administrator/appliquer-modification-type-aide',
+        'administrator.delete_tontine_type' => '/administrator/supprimer-type-aide',
+        'administrator.tontines' => '/administrator/tontines',
+        'administrator.new_tontine' => '/administrator/nouvelle-aide',
+        'administrator.add_tontine' => '/administrator/ajouter-aide',
+        'administrator.tontine_details' => '/administrator/details-aide',
+
+        'administrator.delete_tontine' => '/administrator/supprimer-aide',
+
+
+
+
         'administrator.help_types' => '/administrator/types-aide',
         'administrator.new_help_type' => '/administrator/nouveau-type-aide',
         'administrator.update_help_type' => '/administrator/modifier-type-aide',
@@ -84,6 +101,8 @@ class RouteManager {
         'administrator.fix_social_crown' => '/administrator/regler-fond-social',
 
         'administrator.settings' => '/administrator/configurations',
+        'administrator.agape' => '/administrator/agape',
+        'administrator.nouvelle_agape' => '/administrator/nouvelle-agape',
         'administrator.apply_settings' => '/administrator/appliquer-configuration',
         'administrator.apply_agape' => '/administrator/appliquer-agape',
 
