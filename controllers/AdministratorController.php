@@ -1642,7 +1642,7 @@ class AdministratorController extends Controller
                                 $contribution->member_id = $member->id;
                                 $contribution->tontine_id = $tontine->id;
                                 $contribution->save();
-                                MailManager::alert_new_help($member->user(), $member, $tontine, $tontine_type);
+                                /**MailManager::alert_new_tontine($member->user(), $member, $tontine, $tontine_type);**/
                             }
 
                             return $this->redirect("@administrator.tontines");
@@ -1736,14 +1736,14 @@ class AdministratorController extends Controller
     public function actionSupprimerTypeTontine()
     {
         if (Yii::$app->request->getIsPost()) {
-            $model = new HelpTypeForm();
+            $model = new TontineTypeForm();
             $model->load(Yii::$app->request->post());
             if ($model->id) {
-                $helpType = HelpType::findOne($model->id);
-                if ($helpType) {
-                    $helpType->active = false;
-                    $helpType->delete();
-                    return $this->redirect("@administrator.help_types");
+                $tontineType = TontineType::findOne($model->id);
+                if ($tontineType) {
+                    $tontineType->active = false;
+                    $tontineType->delete();
+                    return $this->redirect("@administrator.tontine_types");
                 } else
                     return RedirectionManager::abort($this);
             } else
@@ -1784,6 +1784,7 @@ class AdministratorController extends Controller
             return RedirectionManager::abort($this);
         }
     }
+
 
 
 

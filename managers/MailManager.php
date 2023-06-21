@@ -14,6 +14,7 @@ use app\models\Help;
 use app\models\HelpType;
 use app\models\Member;
 use app\models\Session;
+use app\models\Tontine;
 use app\models\User;
 
 class MailManager
@@ -82,17 +83,35 @@ class MailManager
         }
     }
 
-    public static function alert_new_help(User $user, Member $member, Help $help, HelpType $helpType) {
-        try{
-            \Yii::$app->mailer->compose('alert_new_help', compact('user','member','help','helpType'))
+    public static function alert_new_help(User $user, Member $member, Help $help, HelpType $helpType)
+    {
+        try {
+            \Yii::$app->mailer->compose('alert_new_help', compact('user', 'member', 'help', 'helpType'))
                 ->setFrom(self::$from)
                 ->setTo($user->email)
                 ->setSubject("Nouvelle aide financière")
                 ->send();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
 
         }
     }
+    public static function alert_new_tontine(User $user, Member $member, Tontine $tontine, TontineType $tontineType) {
+        try{
+            \Yii::$app->mailer->compose('alert_new_tontine', compact('user','member','tontine','tontineType'))
+                ->setFrom(self::$from)
+                ->setTo($user->email)
+                ->setSubject("Nouvelle Tontine")
+                ->send();
+        }catch (\Exception $exception) {
+
+        }
+
+
+    }
+
+
+
+
 
     public static function alert_new_administrator(User $user) {
 

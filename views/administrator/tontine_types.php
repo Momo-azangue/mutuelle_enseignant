@@ -58,7 +58,7 @@ Type d'aide
     <br>
     <br>
     <div class="row">
-        <h1 class="col-12 text-center text-muted">Aucune Nouvelle catégorie tontine enregistrée</h1>
+        <h1 class="col-12 text-center text-muted">Aucune Nouvelle catégorie de tontine enregistrée</h1>
     </div>
 <?php endif;?>
 

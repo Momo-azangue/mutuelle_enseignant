@@ -335,7 +335,59 @@ Accueil
 
                 </div>
             </div>
+            <div class="col-m-auto mt-4 ">
+            <div class="row ">
+                <div class="col-12 white-block">
+                    <h3 class="text-center text-muted">Evènements de la mutuelle</h3>
+                    <?php
+                    $tontines = \app\models\Tontine::findAll(['state' => true]);
+                    ?>
+                    <?php
+                    if (count($tontines)):
+                        ?>
+                        <?php
+                        foreach ($tontines as $tontine):
+                            $member = $tontine->member();
+                            $user = $member->user();
+                            $tontineType = $tontine->TontineType();
+                            ?>
+                            <div class="media">
+                                <img class="d-flex mr-3" width="60" height="60" src="<?= \app\managers\FileManager::loadAvatar($user)?>" alt="Generic placeholder image">
+                                <div class="media-body">
+                                    <h5 class="mt-0 font-weight-bold"><?= $tontineType->title ?></h5>
+                                    <span class="blue-text"><b><?= $user->name.' '.$user->first_name?></b></span>
+                                    <br>
+                                    <?= $tontine->comments ?>
+                                    <br>
+                                    <span style="font-size: 1.5rem" class="text-secondary"><?= ($t=$tontine->contributedAmount())?$t:0?> / <?= $tontine->amount?>  XAF</span>
+                                    <div class="text-right">
+                                        <a href="<?= Yii::getAlias("@administrator.help_details")."?q=".$tontine->id?>" class="btn btn-primary p-2">Détails</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <?php
+                        endforeach;
+                        ?>
+
+                    <?php
+                    else:
+                        ?>
+                        <p class="text-center text-primary">Aucune tontine active</p>
+                    <?php
+                    endif;
+                    ?>
+                    <p class="text-center"><a href="<?= Yii::getAlias("@administrator.new_tontine") ?>" class="btn btn-primary">Créer une nouvelle Tontine</a></p>
+
+
+                </div>
+            </div>
+            </div>
         </div>
+
+
+
+
         <div class="col-md-4">
             <?php
             if ($session):
@@ -414,4 +466,8 @@ Accueil
         </div>
     </div>
 
+
+
+
 </div>
+
