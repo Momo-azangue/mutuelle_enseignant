@@ -89,6 +89,9 @@ $this->title = "Mutuelle - ENSP";
                             <a class="nav-link waves-effect <?= AdministratorSessionManager::isHeadExerciseDebt()?'blue-text':'' ?>" href="<?= Yii::getAlias("@administrator.exercise_debts")?>">Dettes</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link waves-effect <?= AdministratorSessionManager::isHeadTontine()?'blue-text':'' ?>" href="<?= Yii::getAlias("@administrator.tontines")?>">Tontine</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link waves-effect <?= AdministratorSessionManager::isHeadHelp()?'blue-text':'' ?>" href="<?= Yii::getAlias("@administrator.helps")?>">Fond Social</a>
                         </li>
                     </ul>
