@@ -150,11 +150,14 @@ $this->title = "Mutuelle - ENSP";
             <div class="side-wrapper">
                 <div class="side-title">SETTING</div>
                      <div class="side-menu">
-           <!-- <div class="list-group list-group-flush"> -->
+           <!--<div class="list-group list-group-flush">-->
                         <a href="<?= Yii::getAlias("@administrator.profile")?>" class="list-group-item list-group-item-action <?= AdministratorSessionManager::isProfile()?'active':''?> waves-effect">
                             <i class="fas fa-user mr-3"></i>Profil</a>
+
                         <a href="<?= Yii::getAlias("@administrator.settings") ?>" class="list-group-item list-group-item-action <?= AdministratorSessionManager::isSettings()?'active':''?> waves-effect">
                             <i class="fas fa-cogs mr-3"></i>Configurations</a>
+                                    <a href="<?= Yii::getAlias("@administrator.agape") ?>" class="list-group-item list-group-item-action <?= AdministratorSessionManager::isHeadAgape()?'active':''?> waves-effect">
+                             <i class="fas fa-heart mr-3"></i>Agape</a>
                     </div> 
                       
             </div>

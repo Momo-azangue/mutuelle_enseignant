@@ -110,4 +110,8 @@ class AdministratorSessionManager
     public static function isTontine() {
         return \Yii::$app->session->get(self::place) == "tontine";
     }
+
+    public static function isHeadAgape() {
+        return \Yii::$app->session->get(self::place) == "agape";
+    }
 }

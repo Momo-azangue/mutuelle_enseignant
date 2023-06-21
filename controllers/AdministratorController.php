@@ -1432,28 +1432,6 @@ class AdministratorController extends Controller
     }
 
     /*********************************************Appliquer Agape test**********************************************************************/
-    /** public function actionCreate($sessionId)
-     * {
-     * $session = Session::findOne($sessionId);
-     * if (!$session) {
-     * throw new \yii\web\NotFoundHttpException('La session demandée n\'existe pas.');
-     * }
-     *
-     * $model = new Agape();
-     *
-     * if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-     * $model->session_id = $session->id;
-     * if ($model->save()) {
-     * Yii::$app->session->setFlash('success', 'L\'agape a été enregistrée avec succès.');
-     *
-     * }
-     * else {
-     * Yii::$app->session->setFlash('error', 'Une erreur s\'est produite lors de l\'enregistrement de l\'agape.');
-     * }
-     * }
-     *
-     * return $this->render('settings', ['model' => $model]);
-     * }**/
 
 
     public function actionAgape()
@@ -1475,7 +1453,7 @@ class AdministratorController extends Controller
 
         return $this->render("agape", compact("agapeForm", "sessions", "pagination"));
     }
-
+/********************************************agape************************************************************************************/
     public function actionNouvelleAgape()
     {
 
