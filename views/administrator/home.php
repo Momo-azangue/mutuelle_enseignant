@@ -361,7 +361,7 @@ Accueil
                                     <br>
                                     <span style="font-size: 1.5rem" class="text-secondary"><?= ($t=$tontine->contributedAmount())?$t:0?> / <?= $tontine->amount?>  XAF</span>
                                     <div class="text-right">
-                                        <a href="<?= Yii::getAlias("@administrator.help_details")."?q=".$tontine->id?>" class="btn btn-primary p-2">Détails</a>
+                                        <a href="<?= Yii::getAlias("@administrator.tontine_details")."?q=".$tontine->id?>" class="btn btn-primary p-2">Détails</a>
                                     </div>
                                 </div>
                             </div>

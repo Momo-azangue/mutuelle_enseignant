@@ -6,7 +6,7 @@ use yii\db\ActiveRecord;
 
 class TontineType extends ActiveRecord
 {
-    public function Tontine() {
+    public function Tontines() {
         return Help::findAll(['tontine_type_id' => $this->id]);
     }
 

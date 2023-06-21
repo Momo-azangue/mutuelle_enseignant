@@ -24,6 +24,7 @@ use app\models\forms\AgapeForm;
 use app\models\forms\HelpTypeForm;
 use app\models\forms\IdForm;
 use app\models\forms\NewAdministratorForm;
+use app\models\forms\NewAgapeForm;
 use app\models\forms\NewBorrowingForm;
 use app\models\forms\NewContributionForm;
 use app\models\forms\NewHelpForm;
@@ -1375,11 +1376,29 @@ class AdministratorController extends Controller
         $model->social_crown = SettingManager::getSocialCrown();
         $model->inscription = SettingManager::getInscription();
 
+
+
+        return $this->render("settings", compact("model"));
+    }
+
+    public function  actionAgapess(){
         AdministratorSessionManager::setAgapes();
         $agapeForm = new AgapeForm();
         $agapeForm->amount = SettingManager::getAgape();
 
-        return $this->render("settings", compact("model", "agapeForm"));
+
+        $query = Session::find();
+        $pagination = new Pagination([
+            'defaultPageSize' => 5,
+            'totalCount' => $query->count(),
+        ]);
+
+        $sessions = $query->orderBy(['created_at' => SORT_DESC])
+            ->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+
+        return $this->render("agape", compact("agapeForm", "sessions", "pagination"));
     }
 
 
@@ -1425,7 +1444,7 @@ class AdministratorController extends Controller
                 return $this->redirect("@administrator.settings");
 
             } else
-                return $this->render("settings", compact("agapeForm"));
+                return $this->render("agape", compact("agapeForm"));
         } else
             return RedirectionManager::abort($this);
 
@@ -1453,7 +1472,94 @@ class AdministratorController extends Controller
 
         return $this->render("agape", compact("agapeForm", "sessions", "pagination"));
     }
-/********************************************agape************************************************************************************/
+
+
+
+/***************************************la version teste d'agape **************************************************/
+    public function actionAgapes()
+    {
+        AdministratorSessionManager::setHome("agape");
+
+        $activeAgape = Agape::find();
+
+        $query1 = Agape::find()->where(['agape_id'])->orderBy('created_at', SORT_DESC);
+
+        $pagination1 = new Pagination([
+            'defaultPageSize' => 9,
+        ]);
+
+        $query = Session::find();
+
+        $pagination = new Pagination([
+            'defaultPageSize' => 5,
+            'totalCount' => $query->count(),
+        ]);
+
+        $sessions = $query->orderBy(['created_at' => SORT_DESC])
+            ->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+
+
+
+        $agapes = $query1->orderBy(['created_at'=> SORT_DESC])
+        ->offset($pagination1->offset)
+        ->limit($pagination1->limit)
+        ->select('agape_id');// Sélectionne uniquement l'ID de session
+
+
+        return $this->render("agapes", compact("agapes", 'pagination1','pagination',"sessions", "activeAgape"));
+    }
+    /***********************************************************************************************/
+    public function actionNouvelleAgape1()
+    {
+        AdministratorSessionManager::setHome("tontine");
+        $model = new AgapeForm();
+        return $this->render("agapes", compact("model"));
+    }
+
+    /********************************************Ajouter une Agape************************************************************************/
+    public function actionAjouterAgape()
+    {
+        if (Yii::$app->request->getIsPost()) {
+            $model = new NewAgapeForm();
+            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+
+
+                $session = Session::findOne($model->session_id);
+               ;
+
+                if ($session) {
+
+
+                            $agape = new Agape();
+
+                            $agape->amount = $model->amount;
+                            $agape->session_id = $model->session_id;
+                            $agape->save();
+
+
+                            return $this->redirect("@administrator.agapes");
+                        }
+
+                        }
+
+            return $this->render("new_agape", compact("model"));
+                }
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+    /********************************************agape************************************************************************************/
     public function actionNouvelleAgape()
     {
 
@@ -1497,7 +1603,7 @@ class AdministratorController extends Controller
 
 
 
-    /*******************************************Tontine********************************************************************************************/
+    /*******************************************Type de Tontine********************************************************************************************/
 
 
     public function actionTypesTontine(){
@@ -1506,7 +1612,7 @@ class AdministratorController extends Controller
 
             return $this->render('tontine_types', compact('tontineTypes'));
     }
-
+/************************************************Modifier le type de tontine *****************************************************************************************************/
     public function actionModifierTypeTontine($q = 0){
 
         if($q){
@@ -1528,7 +1634,7 @@ class AdministratorController extends Controller
         }
 
     }
-
+/************************************************les tontines **************************************************************************/
     public function actionTontines()
     {
         AdministratorSessionManager::setHome("tontine");
@@ -1550,9 +1656,7 @@ class AdministratorController extends Controller
         return $this->render("tontines", compact("tontines", 'pagination', "activeTontines"));
     }
 
-
-
-
+/**************************************Détails sur les tontines ***********************************************************************************/
     public function actionDetailsTontine($q = 0)
     {
         if ($q) {
@@ -1566,13 +1670,7 @@ class AdministratorController extends Controller
             return RedirectionManager::abort($this);
     }
 
-
-    /************************************************tontine ****************************************************************/
-
-    /***************************contribution des membres ************************************************************* */
-
-
-    /*****************************nouvelle aide côté administrateur ******************************************* */
+    /*****************************nouvelle  tontine côté administrateur ******************************************* */
     public function actionNouvelleTontine()
     {
         AdministratorSessionManager::setHome("tontine");
@@ -1590,7 +1688,7 @@ class AdministratorController extends Controller
                 $d2 = (new DateTime($model->limit_date))->getTimestamp();
 
                 $member = Member::findOne($model->member_id);
-                $tontine_type = HelpType::findOne($model->tontine_type_id);
+                $tontine_type = TontineType::findOne($model->tontine_type_id);
 
                 if ($member && $tontine_type && $member->active) {
                     //vérifier si le membre a déjà fait un emprunt

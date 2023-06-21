@@ -61,7 +61,7 @@ $this->beginBlock('title') ?>
 <?php
 $member = $tontine->member();
 $user = $member->user();
-$TontineType = $tontine->TontinType();
+$TontineType = $tontine->TontineType();
 ?>
 <div class="container mb-5 mt-5">
     <div class="row">

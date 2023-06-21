@@ -102,6 +102,10 @@ class RouteManager {
 
         'administrator.settings' => '/administrator/configurations',
         'administrator.agape' => '/administrator/agape',
+        'administrator.agapes' => '/administrator/agapes',
+        'administrator.nouvelle_agape1' => '/administrator/nouvelle-agape1',
+        'administrator.add_agape' => '/administrator/ajouter-agape',
+
         'administrator.nouvelle_agape' => '/administrator/nouvelle-agape',
         'administrator.apply_settings' => '/administrator/appliquer-configuration',
         'administrator.apply_agape' => '/administrator/appliquer-agape',
