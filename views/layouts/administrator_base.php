@@ -104,13 +104,15 @@ $this->title = "Mutuelle - ENSP";
                                 <span><?= $this->params['administrator']->username ?></span>
                             </a>
                         </li>
-                     <!--   <li class="nav-item">
-                            <form action="<?= Yii::getAlias('@administrator.disconnection')?>" method="post" id="disconnection-form">
-                                <input type="hidden" name="<?=Yii::$app->request->csrfParam?>" value="<?=Yii::$app->request->csrfToken?>"/>
-                            </form>
-                            
-                            <button type="button" class="btn btn-primary" id="btn-disconnect" onclick="$('#disconnection-form').submit()">Déconnexion</button>
-                        </li>-->
+                        <li class="side-wrapper">
+                            <div class="side-menu">
+                                <form action="<?= Yii::getAlias('@administrator.disconnection')?>" method="post" id="disconnection-form">
+                                    <input type="hidden" name="<?=Yii::$app->request->csrfParam?>" value="<?=Yii::$app->request->csrfToken?>"/>
+                                </form>
+
+                                <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#btn-disconnect" >Déconnexion</button>
+                            </div>
+                        </li>
                     </ul>
 
                 </div>
@@ -161,15 +163,7 @@ $this->title = "Mutuelle - ENSP";
                     </div> 
                       
             </div>
-            <div class="side-wrapper">
-                 <div class="side-menu">
-                        <form action="<?= Yii::getAlias('@administrator.disconnection')?>" method="post" id="disconnection-form">
-                            <input type="hidden" name="<?=Yii::$app->request->csrfParam?>" value="<?=Yii::$app->request->csrfToken?>"/>
-                        </form>
-                            
-                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#btn-disconnect" >Déconnexion</button>
-                </div>
-            </div>
+
             <div class="modal  fade" id="btn-disconnect" tabindex="-1" role="dialog"
                  aria-labelledby="myModalLabel"
                  aria-hidden="true">

@@ -97,7 +97,15 @@ $this->title = "Mutuelle - ENSP";
                                 <span><?= $this->params['member']->username ?></span>
                             </a>
                         </li>
-                       
+                        <li class="side-wrapper">
+                            <div class="side-menu">
+                                <form action="<?= Yii::getAlias('@administrator.disconnection')?>" method="post" id="disconnection-form">
+                                    <input type="hidden" name="<?=Yii::$app->request->csrfParam?>" value="<?=Yii::$app->request->csrfToken?>"/>
+                                </form>
+
+                                <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#btn-disconnect" >Déconnexion</button>
+                            </div>
+                        </li>
                             
                     </ul>
 
@@ -137,14 +145,7 @@ $this->title = "Mutuelle - ENSP";
                         <i class="fas fa-user mr-3"></i>Mon profil</a>
                     </div>
             </div>
-            <div class="side-wrapper">
-                 <div class="side-menu">
-                     <form action="<?= Yii::getAlias('@member.disconnection')?>" method="post" id="disconnection-form">
-                        <input type="hidden" name="<?=Yii::$app->request->csrfParam?>" value="<?=Yii::$app->request->csrfToken?>"/>
-                     </form>
-                     <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#btn-disconnect" >Déconnexion</button>
-                 </div>
-            </div>
+
             <div class="modal  fade" id="btn-disconnect" tabindex="-1" role="dialog"
                  aria-labelledby="myModalLabel"
                  aria-hidden="true">
@@ -166,6 +167,9 @@ $this->title = "Mutuelle - ENSP";
 
             </div>
         </div>
+        </div>
+
+
         </div>
         <!-- Sidebar -->
 
