@@ -2,11 +2,13 @@
 
 namespace app\models;
 
-class Agape extends \yii\db\ActiveRecord
+use yii\db\ActiveRecord;
+
+class Agape3 extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'agape';
+        return 'agape3';
     }
 
     public function rules()
@@ -24,9 +26,14 @@ class Agape extends \yii\db\ActiveRecord
             'agape_id' => 'Agape ID',
             'amount' => 'Amount',
             'session_id' => 'Session ID',
-
         ];
     }
+
+    public static function primaryKey()
+    {
+        return ['agape_id']; // Replace 'id' with the actual primary key column name
+    }
+
 
     public function getSession()
     {
@@ -34,5 +41,5 @@ class Agape extends \yii\db\ActiveRecord
     }
 
 
+}
 
-    }

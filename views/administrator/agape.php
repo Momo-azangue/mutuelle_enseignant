@@ -8,24 +8,7 @@ Epargnes
 </style>
 <?php $this->endBlock() ?>
 
-<div class="container mt-5 mb-5">
 
-    <div>
-
-        <?php if(count($sessions)): ?>
-            <?php $activeSession = \app\models\Session::findOne(['active' => true]); ?>
-
-            <?php if($activeSession): ?>
-
-                <?php $agapeAmount = \app\models\Agape::find()->where(['session_id' => $activeSession->id])->sum('amount') ?>
-                <div class="col-12 white-block text-center mb-5">
-                    <h3>agape valeur de la session </h3>
-                    <h1 class="blue-text"><?= $agapeAmount ? $agapeAmount: 0 ?> XAF</h1>
-
-
-                </div>
-    </div>
-   </div>
 
     <div class="container mt-5 mb-5 ">
         <div class="col-10">
@@ -38,7 +21,7 @@ Epargnes
                     $formAgape = \yii\widgets\ActiveForm::begin([
                         'method' => 'post',
                         'errorCssClass' => 'text-secondary',
-                        'action' => '@administrator.nouvelle_agape',
+                        'action' => '@administrator.agape',
                         'options' => ['class' => 'col-12 col-md-8 white-block']
                     ])
                     ?>
@@ -57,6 +40,5 @@ Epargnes
                 </div>
             </div>
         </div>
-        <?php endif; ?>
-        <?php endif; ?>
+
 </div>

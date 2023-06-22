@@ -10,7 +10,7 @@
                     $formAgape = \yii\widgets\ActiveForm::begin([
                         'method' => 'post',
                         'errorCssClass' => 'text-secondary',
-                        'action' => '@administrator.nouvelle_agape',
+                        'action' => '@administrator.agapess',
                         'options' => ['class' => 'col-12 col-md-8 white-block']
                     ])
                     ?>

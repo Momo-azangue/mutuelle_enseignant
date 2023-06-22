@@ -35,7 +35,7 @@ class SettingManager
         $json_source = file_get_contents(\Yii::$app->getBasePath().'/managers/app2.json');
         $data = json_decode($json_source,true);
 
-        return $data['agape'];
+        return $data['amount'];
     }
 
     public static function setValues($interest,$social_crown,$inscription) {
@@ -49,9 +49,9 @@ class SettingManager
 
     }
 
-    public static function setvaluesAgape($agape){
+    public static function setvaluesAgape($amount){
         $data = [
-            'agape'=> $agape,
+            'amount'=> $amount,
         ];
 
         file_put_contents(\Yii::$app->getBasePath().'/managers/app2.json',json_encode($data));

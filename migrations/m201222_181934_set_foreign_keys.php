@@ -49,6 +49,7 @@ class m201222_181934_set_foreign_keys extends Migration
         $this->addForeignKey('contribution_member_id','contribution','member_id','member','id');
         $this->addForeignKey('contribution_administrator_id','contribution','administrator_id','administrator','id');
 
+        $this->addForeignKey('agape3_session_id','agape3','session_id','session','id');
         $this->addForeignKey('agape_session_id','agape','session_id','session','id');
 
         $this->addForeignKey('help_administrator_id','help','administrator_id','administrator','id');

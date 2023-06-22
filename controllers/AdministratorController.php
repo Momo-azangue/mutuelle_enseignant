@@ -24,7 +24,6 @@ use app\models\forms\AgapeForm;
 use app\models\forms\HelpTypeForm;
 use app\models\forms\IdForm;
 use app\models\forms\NewAdministratorForm;
-use app\models\forms\NewAgapeForm;
 use app\models\forms\NewBorrowingForm;
 use app\models\forms\NewContributionForm;
 use app\models\forms\NewHelpForm;
@@ -52,7 +51,9 @@ use yii\base\Security;
 use yii\data\Pagination;
 use yii\web\Controller;
 use yii\web\UploadedFile;
-
+use yii\data\ActiveDataProvider;
+use yii\web\NotFoundHttpException;
+use app\models\Agape3;
 class AdministratorController extends Controller
 {
     public $layout = "administrator_base";
@@ -1381,26 +1382,6 @@ class AdministratorController extends Controller
         return $this->render("settings", compact("model"));
     }
 
-    public function  actionAgapess(){
-        AdministratorSessionManager::setAgapes();
-        $agapeForm = new AgapeForm();
-        $agapeForm->amount = SettingManager::getAgape();
-
-
-        $query = Session::find();
-        $pagination = new Pagination([
-            'defaultPageSize' => 5,
-            'totalCount' => $query->count(),
-        ]);
-
-        $sessions = $query->orderBy(['created_at' => SORT_DESC])
-            ->offset($pagination->offset)
-            ->limit($pagination->limit)
-            ->all();
-
-        return $this->render("agape", compact("agapeForm", "sessions", "pagination"));
-    }
-
 
     /*****************************Appliquer les configurations ********************************************************* */
     public function actionAppliquerConfiguration()
@@ -1430,121 +1411,82 @@ class AdministratorController extends Controller
     }
 
     /**************************************Appliquer Agape***************************************************************/
-    public function actionAppliquerAgape()
+
+
+    public function actionAgape()
     {
+        AdministratorSessionManager::setSettings();
+        $agapeForm = new AgapeForm();
+        $agapeForm->amount = SettingManager::getAgape();
+
+        return $this->render("agape", compact("agapeForm"));
+    }
+
+
+    public function actionAppliquerAgape(){
+
+
         if (Yii::$app->request->getIsPost()) {
 
             $agapeForm = new AgapeForm();
+
             if ($agapeForm->load(Yii::$app->request->post()) && $agapeForm->validate()) {
 
                 $agapeForm->save();
-
                 SettingManager::setvaluesAgape($agapeForm->amount);
 
-                return $this->redirect("@administrator.settings");
 
+                return $this->redirect("@administrator.agape");
             } else
                 return $this->render("agape", compact("agapeForm"));
         } else
             return RedirectionManager::abort($this);
+
+
+
 
     }
 
     /*********************************************Appliquer Agape test**********************************************************************/
 
 
-    public function actionAgape()
-    {
-        AdministratorSessionManager::setHome("agape");
 
-        $agapeForm = new AgapeForm();
-
-        $query = Session::find();
-        $pagination = new Pagination([
-            'defaultPageSize' => 5,
-            'totalCount' => $query->count(),
-        ]);
-
-        $sessions = $query->orderBy(['created_at' => SORT_DESC])
-            ->offset($pagination->offset)
-            ->limit($pagination->limit)
-            ->all();
-
-        return $this->render("agape", compact("agapeForm", "sessions", "pagination"));
-    }
 
 
 
 /***************************************la version teste d'agape **************************************************/
-    public function actionAgapes()
-    {
-        AdministratorSessionManager::setHome("agape");
-
-        $activeAgape = Agape::find();
-
-        $query1 = Agape::find()->where(['agape_id'])->orderBy('created_at', SORT_DESC);
-
-        $pagination1 = new Pagination([
-            'defaultPageSize' => 9,
-        ]);
-
-        $query = Session::find();
-
-        $pagination = new Pagination([
-            'defaultPageSize' => 5,
-            'totalCount' => $query->count(),
-        ]);
-
-        $sessions = $query->orderBy(['created_at' => SORT_DESC])
-            ->offset($pagination->offset)
-            ->limit($pagination->limit)
-            ->all();
 
 
 
-        $agapes = $query1->orderBy(['created_at'=> SORT_DESC])
-        ->offset($pagination1->offset)
-        ->limit($pagination1->limit)
-        ->select('agape_id');// Sélectionne uniquement l'ID de session
-
-
-        return $this->render("agapes", compact("agapes", 'pagination1','pagination',"sessions", "activeAgape"));
-    }
-    /***********************************************************************************************/
-    public function actionNouvelleAgape1()
-    {
-        AdministratorSessionManager::setHome("tontine");
-        $model = new AgapeForm();
-        return $this->render("agapes", compact("model"));
-    }
 
     /********************************************Ajouter une Agape************************************************************************/
     public function actionAjouterAgape()
     {
         if (Yii::$app->request->getIsPost()) {
-            $model = new NewAgapeForm();
-            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $agapeForm = new AgapeForm();
+            if ($agapeForm->load(Yii::$app->request->post()) && $agapeForm->validate()) {
 
 
-                $session = Session::findOne($model->session_id);
-               ;
+                $session = Session::findOne($agapeForm->session_id);
 
                 if ($session) {
 
 
                             $agape = new Agape();
 
-                            $agape->amount = $model->amount;
-                            $agape->session_id = $model->session_id;
+                            $agape->amount = $agapeForm->amount;
+                            $agape->session_id = $agapeForm->session_id;
                             $agape->save();
 
 
-                            return $this->redirect("@administrator.agapes");
+
+
+                            return $this->redirect("@administrator.agapess");
                         }
 
                         }
 
-            return $this->render("new_agape", compact("model"));
+            return $this->render("agape", compact("agapeForm"));
                 }
 
 
@@ -1861,6 +1803,83 @@ class AdministratorController extends Controller
         }
     }
 
+
+    public function actionIndex()
+    {
+        $dataProvider = new \yii\data\ActiveDataProvider([
+            'query' => Agape3::find(),
+        ]);
+
+        return $this->render('index', ['dataProvider' => $dataProvider]);
+    }
+
+
+    public function actionCreate()
+    {
+        $model = new Agape3();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            // Get the session ID and assign it to the model
+            $model->session_id = Yii::$app->request->post('Agape3')['session_id'];
+            $model->save();
+
+            return $this->redirect(['view', 'id' => $model->primaryKey]);
+        }
+
+        // Retrieve the list of sessions for the dropdown
+        $sessions = Session::find()->all();
+
+        return $this->render('create', [
+            'model' => $model,
+            'sessions' => $sessions,
+        ]);
+    }
+
+
+
+
+
+    public function actionView($id)
+    {
+        $model = $this->findModel($id);
+        return $this->render('view', ['model' => $model]);
+    }
+
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            // Get the session ID and assign it to the model
+            $model->session_id = Yii::$app->request->post('session_id');
+            $model->save();
+
+            return $this->redirect(['view', 'id' => $model->agape_id]);
+        }
+
+        // Retrieve the list of sessions for the dropdown
+        $sessions = Session::find()->all();
+
+        return $this->render('update', [
+            'model' => $model,
+            'sessions' => $sessions,
+        ]);
+    }
+
+    public function actionDelete($id)
+    {
+        $this->findModel($id)->delete();
+        return $this->redirect(['index']);
+    }
+
+    protected function findModel($id)
+    {
+        if (($model = Agape3::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
 
 
 
