@@ -58,19 +58,25 @@ Mes contributions
                     <?php foreach ($contributions as $index => $contribution): 
                     $admin = Administrator::findOne(['id'=> $contribution->administrator_id]);
                     $help = Help::findOne(['id'=> $contribution->help_id]);
+                        $helptype = null;
+                        $member = null;
+                        if($help !== null){
                     $helptype = Help_type::findOne(['id'=> $help->help_type_id]);
                     $member = Member::findOne(['id'=> $help->member_id]);
                     //$session = Session::findOne(['id'=> $borrowing->session_id]);
-                    //$exercise = Exercise::findOne(['id'=> $session->exercise_id]); ?>
+                    //$exercise = Exercise::findOne(['id'=> $session->exercise_id]);
+                        } ?>
+
+
 
                         <tr>
                             <th scope="row" class="blue-text"><?= $index + 1 ?></th>
-                            <td ><?= $help->unit_amount ?> XAF</td>
-                            <td><?= $contribution->date ?></td>
-                            <td><?= $admin->username ?></td>
-                            <td class="text-secondary"><?= $member->username ?></td>
-                            <td class="text-secondary"><?= $helptype->title ?></td>
-                                    
+                            <td><?= $help !== null ? $help->unit_amount . ' XAF' : '' ?></td>
+                            <td><?= $contribution !== null ? $contribution->date : '' ?></td>
+                            <td><?= $admin !== null ? $admin->username : '' ?></td>
+                            <td class="text-secondary"><?= $member !== null ? $member->username : '' ?></td>
+                            <td class="text-secondary"><?= $helptype !== null ? $helptype->title : '' ?></td>
+
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
