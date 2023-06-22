@@ -89,6 +89,9 @@ class FinanceManager
         return 0;
     }
 
+
+
+
     public static function exerciseSavings() {
         $exercise = Exercise::findOne(['active' => true]);
         $sessions = Session::find()->select('id')->where(['exercise_id' => $exercise->id])->column();

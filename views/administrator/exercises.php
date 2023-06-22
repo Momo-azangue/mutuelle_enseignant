@@ -48,6 +48,13 @@ Exercices
         background-color: rgba(255, 47, 0, 0.51);
     }
 
+
+    .b-fondsocial {
+        border-color: rgba(173, 225, 119, 0.87);
+        color: rgba(36, 65, 10, 0.89);
+        background-color: rgba(199, 236, 168, 0.86);
+    }
+
 </style>
 <?php $this->endBlock() ?>
 
@@ -55,6 +62,7 @@ Exercices
     <div class="row">
         <?php
         $labels = [];
+
         $data = [];
         $colors = [];
         ?>
@@ -116,7 +124,13 @@ Exercices
                                 <h5>Montant Agapè</h5>
                                 <h2><?= ($t=$exercise->totalAgapeAmount()) ?$t:0 ?> XAF</h2>
                             </div>
-                        </div>
+                            <?php if($exercise && \app\managers\FinanceManager::numberOfSession() < 12):?>
+                            <div class="bl b-fondsocial">
+                                <h5>Le montant du Fond social pour le prochain Exercice est :</h5>
+                                <h2><?= ($t=$exercise->renflouementAmount()) ?$t:0 ?> XAF</h2>
+                            </div>
+                            <?php endif; ?>
+                                                    </div>
                     </div>
 
                 </div>

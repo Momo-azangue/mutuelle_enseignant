@@ -7,30 +7,10 @@ $this->beginBlock('title') ?>
     <style>
     </style>
 <?php $this->endBlock() ?>
-
-<div class="container mt-5 mb-5">
-
-    <div>
-        <?php if(count($sessions)): ?>
-        <?php $activeSession = \app\models\Session::findOne(['active' => true]); ?>
-        <?php if($activeSession): ?>
-        <?php $agapeAmount = \app\models\Agape::find()->where(['session_id' => $activeSession->id])->sum('amount'); ?>
-        <div class="col-12 white-block text-center mb-5">
-            <h3>agape valeur de la session </h3>
-            <?php if(is_array($agapeAmount)): ?>
-                <?php foreach($agapeAmount as $amount): ?>
-                    <h1 class="blue-text"><?= $amount ?> XAF</h1>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <h1 class="blue-text"><?= $agapeAmount ? $agapeAmount : 0 ?> XAF</h1>
-            <?php endif; ?>
-        </div>
+<div>
+<br>
+<br>
     </div>
-        <?php endif; ?>
-
-        <?php endif; ?>
-    </div>
-
 
     <div class="row">
         <?php if (count($sessions)): ?>

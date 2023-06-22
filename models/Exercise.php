@@ -24,6 +24,9 @@ class Exercise extends ActiveRecord
         return Member::find()->sum('inscription') ;
     }
 
+    public  function renflouementAmount(){
+        return ($this->exerciseAmount()/ $this->numberofMembers());
+    }
     public function totalSavedAmount() {
         $sessions = Session::find()->select('id')->where(['exercise_id' => $this->id])->column();
         return Saving::find()->where(['session_id' => $sessions])->sum('amount') ;
@@ -60,5 +63,12 @@ class Exercise extends ActiveRecord
         $sessions = Session::find()->select('id')->where(['exercise_id' => $this->id])->column();
         return Borrowing::find()->where(['session_id' => $sessions,'state' =>$c])->all();
     }
+
+    public function numberofMembers()
+    {
+        return Member::find()->count();
+    }
+
+
 
 }
