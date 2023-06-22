@@ -1793,7 +1793,9 @@ class AdministratorController extends Controller
 
 
 
-
+/******************************requête relative à la classe active Agape 3
+ ***************pour l'agape c'est utile et je vais modifier plutard
+ *********************************/
     public function actionView($id)
     {
         $model = $this->findModel($id);
