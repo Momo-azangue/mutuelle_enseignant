@@ -63,6 +63,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '@administrator/update-agape/<id:\d+>' => 'administrator/update-agape',
             ],
         ],
 

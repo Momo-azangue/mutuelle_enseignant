@@ -1412,136 +1412,85 @@ class AdministratorController extends Controller
 
     /**************************************Appliquer Agape***************************************************************/
 
-
     public function actionAgape()
     {
-        AdministratorSessionManager::setSettings();
-        $agapeForm = new AgapeForm();
-        $agapeForm->amount = SettingManager::getAgape();
+        $agapeForm = new Agape();
 
-        return $this->render("agape", compact("agapeForm"));
-    }
+        // Retrieve the list of sessions for the dropdown
+        $sessions = Session::find()->all();
 
-
-    public function actionAppliquerAgape(){
-
-
-        if (Yii::$app->request->getIsPost()) {
-
-            $agapeForm = new AgapeForm();
-
-            if ($agapeForm->load(Yii::$app->request->post()) && $agapeForm->validate()) {
-
-                $agapeForm->save();
-                SettingManager::setvaluesAgape($agapeForm->amount);
-
-
-                return $this->redirect("@administrator.agape");
-            } else
-                return $this->render("agape", compact("agapeForm"));
-        } else
-            return RedirectionManager::abort($this);
+        if ($agapeForm->load(Yii::$app->request->post())) {
+            // Check if a session is selected
+            if (empty($agapeForm->session_id)) {
+                $agapeForm->addError('session_id', 'Vous devez choisir une session.');
+            } else {
+                // Check if an Agape3 record already exists for the selected session
+                $existingAgapeForm = Agape::findOne(['session_id' => $agapeForm->session_id]);
+                if ($existingAgapeForm !== null) {
+                    // An Agape3 record already exists for the selected session
+                    $agapeForm->addError('session_id', 'L\'agape de cette session existe déjà.');
+                } elseif ($agapeForm->validate()) {
+                    // No existing Agape3 record found, and the model passes validation
+                    $agapeForm->save();
 
 
-
-
-    }
-
-    /*********************************************Appliquer Agape test**********************************************************************/
-
-
-
-
-
-
-/***************************************la version teste d'agape **************************************************/
-
-
-
-
-    /********************************************Ajouter une Agape************************************************************************/
-    public function actionAjouterAgape()
-    {
-        if (Yii::$app->request->getIsPost()) {
-            $agapeForm = new AgapeForm();
-            if ($agapeForm->load(Yii::$app->request->post()) && $agapeForm->validate()) {
-
-
-                $session = Session::findOne($agapeForm->session_id);
-
-                if ($session) {
-
-
-                            $agape = new Agape();
-
-                            $agape->amount = $agapeForm->amount;
-                            $agape->session_id = $agapeForm->session_id;
-                            $agape->save();
-
-
-
-
-                            return $this->redirect("@administrator.agapess");
-                        }
-
-                        }
-
-            return $this->render("agape", compact("agapeForm"));
+                   return $this->redirect(['@administrator.agape']);
                 }
+            }
+        }
 
-
+        return $this->render('agape', [
+            'agapeForm' => $agapeForm,
+            'sessions' => $sessions,
+        ]);
     }
 
-
-
-
-
-
-
-
-
-
-    /********************************************agape************************************************************************************/
-    public function actionNouvelleAgape()
+    public function actionUpdateAgape($id)
     {
+        $agapeForm = $this->findModelAgape($id);
 
-        if (Yii::$app->request->getIsPost()) {
-            $query = Session::find();
-            $pagination = new Pagination([
-                'defaultPageSize' => 5,
-                'totalCount' => $query->count(),
-            ]);
+        if ($agapeForm->load(Yii::$app->request->post()) && $agapeForm->validate()) {
+            // Get the session ID and assign it to the model
+            $agapeForm->session_id = Yii::$app->request->post('session_id');
+            $agapeForm->save();
 
-            $sessions = $query->orderBy(['created_at' => SORT_DESC])
-                ->offset($pagination->offset)
-                ->limit($pagination->limit)
-                ->all();
+            return $this->redirect(['@administrator.agape']);
+        }
 
-            $agapeForm = new AgapeForm();
+        // Retrieve the list of sessions for the dropdown
+        $sessions = Session::find()->all();
 
-            if ($agapeForm->load(Yii::$app->request->post()) && $agapeForm->validate()) {
-
-                $session = Session::findOne($agapeForm->session_id);
-                if ($session) {
-                        $agapeForm->save();
-                        $agape = new Agape();
-                        $agape->amount = $agapeForm->amount;
-                        $agape->session_id = $agapeForm->session_id;
-                        $agape->save();
-
-
-                        SettingManager::setvaluesAgape($agapeForm->amount);
-
-                        return $this->redirect("@administrator.agape");
-
-
-                }
-
-            } else
-                return $this->render("agape", compact("agapeForm","sessions"));
-        } else
-            return RedirectionManager::abort($this);
+        return $this->render('update-agape', [
+            'agapeForm' => $agapeForm,
+            'sessions' => $sessions,
+        ]);
     }
+
+    public function actionAgapeIndex()
+    {
+        $dataProvider = new \yii\data\ActiveDataProvider([
+            'query' => Agape::find(),
+        ]);
+
+        return $this->render('agape', ['dataProvider' => $dataProvider]);
+    }
+    public function actionAgapeView($id)
+    {
+        $agapeForm = $this->findModelAgape($id);
+        return $this->render('agape-view', ['$agapeForm' => $agapeForm]);
+    }
+
+    protected function findModelAgape($id)
+    {
+        if (($agapeForm = Agape::findOne($id)) !== null) {
+            return $agapeForm;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+
+
 
 
 
@@ -1818,12 +1767,18 @@ class AdministratorController extends Controller
     {
         $model = new Agape3();
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            // Get the session ID and assign it to the model
-            $model->session_id = Yii::$app->request->post('Agape3')['session_id'];
-            $model->save();
+        if ($model->load(Yii::$app->request->post())) {
+            // Check if an Agape3 record already exists for the selected session
+            $existingModel = Agape3::findOne(['session_id' => $model->session_id]);
+            if ($existingModel !== null) {
+                // An Agape3 record already exists for the selected session
+                $model->addError('session_id', 'An Agape3 record already exists for this session.');
+            } elseif ($model->validate()) {
+                // No existing Agape3 record found, and the model passes validation
+                $model->save();
 
-            return $this->redirect(['view', 'id' => $model->primaryKey]);
+                return $this->redirect(['view', 'id' => $model->primaryKey]);
+            }
         }
 
         // Retrieve the list of sessions for the dropdown

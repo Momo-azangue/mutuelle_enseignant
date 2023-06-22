@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 use app\models\Session;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Agape3 */
+/* @var $agapeForm app\models\Agape */
 /* @var $sessions app\models\Session[] */
 
 $this->title = 'Create Agape3';
@@ -16,17 +16,22 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $formAgape = \yii\widgets\ActiveForm::begin([
+        'method' => 'post',
+        'errorCssClass' => 'text-secondary',
+        'action' => '@administrator.agape',
+        'options' => ['class' => 'col-12 col-md-8 white-block']
+    ]) ?>
 
-    <?= $form->field($model, 'amount')->textInput() ?>
+    <?= $formAgape->field($agapeForm, 'amount')->textInput() ?>
 
-    <?= $form->field($model, 'session_id')->dropDownList(
+    <?= $formAgape->field($agapeForm, 'session_id')->dropDownList(
         Session::find()->select(['date', 'id'])->indexBy('id')->column(),
         ['prompt' => 'Select Session']
-    )->error() ?>
+    ) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Enregistrer', ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
