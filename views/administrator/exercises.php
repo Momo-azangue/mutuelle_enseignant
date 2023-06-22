@@ -41,6 +41,13 @@ Exercices
         color: red;
         background-color: rgba(255, 0, 0, 0.3);
     }
+
+    .b-agape {
+        border-color: rgba(255, 47, 0, 0.8);
+        color: rgba(255, 47, 0, 0.89);
+        background-color: rgba(255, 47, 0, 0.51);
+    }
+
 </style>
 <?php $this->endBlock() ?>
 
@@ -104,6 +111,10 @@ Exercices
                             <div class="bl b-interest">
                                 <h5>Intérêt produit</h5>
                                 <h2><?= ($t=$exercise->interest())?$t:0 ?> XAF</h2>
+                            </div>
+                            <div class="bl b-agape">
+                                <h5>Montant Agapè</h5>
+                                <h2><?= ($t=$exercise->totalAgapeAmount()) ?$t:0 ?> XAF</h2>
                             </div>
                         </div>
                     </div>

@@ -23,7 +23,7 @@ class FinanceManager
 {
 
     public static function exerciseAmount() {
-        return self::totalSavedAmount()+self::totalRefundedAmount()-self::totalBorrowedAmount();
+        return self::totalSavedAmount()+self::totalRefundedAmount()-self::totalBorrowedAmount()-self::totalAgapeAmount();
     }
 
     public function totalInscriptionAmount() {
@@ -62,6 +62,24 @@ class FinanceManager
         else
             return 0;
     }
+
+
+
+
+    public static function totalAgapeAmount(){
+        $exercise = Exercise::findOne(['active' => true]);
+        if ($exercise)
+        {
+            $sessions = Session::find()->select('id')->where(['exercise_id' => $exercise->id])->column();
+
+            return Agape::find()->where(['session_id' => $sessions])->sum('amount') ;
+        }
+        else
+            return 0;
+
+    }
+
+
 
     public static function numberOfSession(){
         $exercise = Exercise::findOne(['active' => true]);
@@ -119,14 +137,5 @@ class FinanceManager
         return $r + self::totalInscriptionAmount();
     }
 
-      public static function agapeAmount(){
-          $exercise = Exercise::findOne(['active' => true]);
-          if ($exercise){
-              $sessions = Session::find()->select('id')->where(['exercise_id' => $exercise->id])->column();
-              return Agape::find()->where(['session_id' => $sessions])->sum('amount') ;
-          }
-          else
-              return 0;
 
-      }
 }

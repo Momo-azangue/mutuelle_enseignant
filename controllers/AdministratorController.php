@@ -836,7 +836,7 @@ class AdministratorController extends Controller
     }
 
     /************************************cloturer une Session************************************************************ */
-    public function actionCloturerSession($q = 0)
+  /******  public function actionCloturerSession($q = 0)
     {
         if ($q) {
             $session = Session::findOne($q);
@@ -851,7 +851,8 @@ class AdministratorController extends Controller
                 ])->execute();
 
 
-                foreach (Member::find()->all() as $member) {
+                $members = Member::find()->all();
+                foreach ($members as $member) {
                     MailManager::alert_end_session($member->user(), $member, $session);
                 }
 
@@ -861,6 +862,33 @@ class AdministratorController extends Controller
         } else
             return RedirectionManager::abort($this);
 
+    }****/
+    public function actionCloturerSession($q = 0)
+    {
+        if ($q) {
+            $session = Session::findOne($q);
+            if ($session && $session->active) {
+                $session->state = "END";
+                $session->active = false;
+                $session->save();
+
+                Yii::$app->db->createCommand('UPDATE borrowing SET interest=interest+:val WHERE session_id!=:session_id AND state=1 ')
+                    ->bindValues([
+                        ':val' => SettingManager::getInterest(),
+                        ':session_id' => $session->id,
+                    ])
+                    ->execute();
+
+                $members = Member::find()->all();
+                foreach ($members as $member) {
+                    MailManager::alert_end_session($member->user(), $member, $session);
+                }
+
+                return $this->redirect("@administrator.home");
+            }
+        }
+
+        return RedirectionManager::abort($this);
     }
 
     /********************************cloturer un exercice ********************************************************************** */
@@ -1410,7 +1438,7 @@ class AdministratorController extends Controller
         endif;
     }
 
-    /**************************************Appliquer Agape***************************************************************/
+    /********************************************Appliquer Agape***************************************************************/
 
     public function actionAgape()
     {

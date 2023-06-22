@@ -17,7 +17,7 @@ class Exercise extends ActiveRecord
         return Session::find()->where(['exercise_id' => $this->id])->orderBy('created_at',SORT_ASC)->all();
     }
     public function exerciseAmount() {
-        return $this->totalSavedAmount()+ $this->totalRefundedAmount()- $this->totalBorrowedAmount();
+        return $this->totalSavedAmount()+ $this->totalRefundedAmount()- $this->totalBorrowedAmount() - $this->totalAgapeAmount();
     }
 
     public function totalInscriptionAmount() {
@@ -37,6 +37,12 @@ class Exercise extends ActiveRecord
     public function totalRefundedAmount() {
         $sessions = Session::find()->select('id')->where(['exercise_id' => $this->id])->column();
         return Refund::find()->where(['session_id' => $sessions])->sum('amount') ;
+    }
+
+
+    public function totalAgapeAmount() {
+        $sessions = Session::find()->select('id')->where(['exercise_id' => $this->id])->column();
+        return Agape::find()->where(['session_id' => $sessions])->sum('amount') ;
     }
 
     public function interest() {
