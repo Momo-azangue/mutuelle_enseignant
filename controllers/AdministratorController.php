@@ -21,7 +21,6 @@ use app\models\BorrowingSaving;
 use app\models\Contribution;
 use app\models\ContributionTontine;
 use app\models\Exercise;
-use app\models\forms\AgapeForm;
 use app\models\forms\HelpTypeForm;
 use app\models\forms\IdForm;
 use app\models\forms\NewAdministratorForm;
@@ -1450,6 +1449,19 @@ class AdministratorController extends Controller
         // Retrieve the list of sessions for the dropdown
         $sessions = Session::find()->all();
 
+        $exercise = Exercise::findOne(['active' => true]);
+
+
+        if ($exercise === null) {
+            // Handle the case when no current exercice is found
+            // You can display an error message or redirect to a different page
+            throw new \yii\web\NotFoundHttpException('No current exercice found.');
+        }
+
+        // Retrieve the sessions for the current exercice
+    $sessions = Session::find()->where(['exercise_id' => $exercise->id])->all();
+
+
         if ($agapeForm->load(Yii::$app->request->post())) {
             // Check if a session is selected
             if (empty($agapeForm->session_id)) {
@@ -1473,6 +1485,7 @@ class AdministratorController extends Controller
         return $this->render('agape', [
             'agapeForm' => $agapeForm,
             'sessions' => $sessions,
+            'exercise_id' => $exercise->id,
         ]);
     }
 
