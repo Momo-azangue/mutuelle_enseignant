@@ -29,4 +29,5 @@ class Tontine extends ActiveRecord
 
 
 
+
 }

@@ -124,7 +124,7 @@ Exercices
                                 <h5>Montant Agapè</h5>
                                 <h2><?= ($t=$exercise->totalAgapeAmount()) ?$t:0 ?> XAF</h2>
                             </div>
-                            <?php if($exercise && \app\managers\FinanceManager::numberOfSession() < 12):?>
+                            <?php if($exercise && \app\managers\FinanceManager::numberOfSession() == 12):?>
                             <div class="bl b-fondsocial">
                                 <h5>Le montant du Fond social pour le prochain Exercice est :</h5>
                                 <h2><?= ($t=$exercise->renflouementAmount()) ?$t:0 ?> XAF</h2>

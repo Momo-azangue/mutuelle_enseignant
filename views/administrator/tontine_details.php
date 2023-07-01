@@ -166,6 +166,6 @@ $TontineType = $tontine->TontineType();
 <?php
 if ($tontine->state):
 ?>
-<a href="<?= Yii::getAlias("@administrator.new_contribution")."?q=".$tontine->id?>" class="btn btn-primary btn-add"><i class="fas fa-plus"></i></a>
+<a href="<?= Yii::getAlias("@administrator.new_contribution_tontine")."?q=".$tontine->id?>" class="btn btn-primary btn-add"><i class="fas fa-plus"></i></a>
 <?php
 endif;

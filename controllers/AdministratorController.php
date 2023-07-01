@@ -1667,7 +1667,7 @@ class AdministratorController extends Controller
             if ($tontine && $tontine->state) {
                 $model = new NewContributionForm();
                 $model->tontine_id = $q;
-                return $this->render("new_contribution", compact("model"));
+                return $this->render("new_contribution_tontine", compact("model"));
             } else
                 return RedirectionManager::abort($this);
         } else
@@ -1702,7 +1702,7 @@ class AdministratorController extends Controller
                     return RedirectionManager::abort($this);
                 }
             } else
-                return $this->render("new_contribution", compact('model'));
+                return $this->render("new_contribution_tontine", compact('model'));
         } else
             return RedirectionManager::abort($this);
     }
@@ -1781,90 +1781,8 @@ class AdministratorController extends Controller
     }
 
 
-    public function actionIndex()
-    {
-        $dataProvider = new \yii\data\ActiveDataProvider([
-            'query' => Agape3::find(),
-        ]);
-
-        return $this->render('index', ['dataProvider' => $dataProvider]);
-    }
 
 
-    public function actionCreate()
-    {
-        $model = new Agape3();
-
-        if ($model->load(Yii::$app->request->post())) {
-            // Check if an Agape3 record already exists for the selected session
-            $existingModel = Agape3::findOne(['session_id' => $model->session_id]);
-            if ($existingModel !== null) {
-                // An Agape3 record already exists for the selected session
-                $model->addError('session_id', 'An Agape3 record already exists for this session.');
-            } elseif ($model->validate()) {
-                // No existing Agape3 record found, and the model passes validation
-                $model->save();
-
-                return $this->redirect(['view', 'id' => $model->primaryKey]);
-            }
-        }
-
-        // Retrieve the list of sessions for the dropdown
-        $sessions = Session::find()->all();
-
-        return $this->render('create', [
-            'model' => $model,
-            'sessions' => $sessions,
-        ]);
-    }
-
-
-
-
-/******************************requête relative à la classe active Agape 3
- ***************pour l'agape c'est utile et je vais modifier plutard
- *********************************/
-    public function actionView($id)
-    {
-        $model = $this->findModel($id);
-        return $this->render('view', ['model' => $model]);
-    }
-
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            // Get the session ID and assign it to the model
-            $model->session_id = Yii::$app->request->post('session_id');
-            $model->save();
-
-            return $this->redirect(['view', 'id' => $model->agape_id]);
-        }
-
-        // Retrieve the list of sessions for the dropdown
-        $sessions = Session::find()->all();
-
-        return $this->render('update', [
-            'model' => $model,
-            'sessions' => $sessions,
-        ]);
-    }
-
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-        return $this->redirect(['index']);
-    }
-
-    protected function findModel($id)
-    {
-        if (($model = Agape3::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
 
 
 

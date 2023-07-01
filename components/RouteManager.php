@@ -85,8 +85,11 @@ class RouteManager {
         'administrator.add_help' => '/administrator/ajouter-aide',
 
         'administrator.help_details' => '/administrator/details-aide',
+
         'administrator.new_contribution' => '/administrator/nouvelle-contribution',
+        'administrator.new_contribution_tontine' => '/administrator/nouvelle-contribution-tontine',
         'administrator.add_contribution' => '/administrator/ajouter-contribution',
+        'administrator.add_contribution_tontine' => '/administrator/ajouter-contribution-tontine',
         'administrator.delete_help' => '/administrator/supprimer-aide',
 
         'administrator.disable_member' => '/administrator/desactiver-membre',
