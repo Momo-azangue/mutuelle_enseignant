@@ -19,6 +19,7 @@ use app\models\Agape;
 use app\models\Borrowing;
 use app\models\BorrowingSaving;
 use app\models\Contribution;
+use app\models\ContributionTontine;
 use app\models\Exercise;
 use app\models\forms\AgapeForm;
 use app\models\forms\HelpTypeForm;
@@ -26,6 +27,7 @@ use app\models\forms\IdForm;
 use app\models\forms\NewAdministratorForm;
 use app\models\forms\NewBorrowingForm;
 use app\models\forms\NewContributionForm;
+use app\models\forms\NewContributionTontineForm;
 use app\models\forms\NewHelpForm;
 use app\models\forms\NewMemberForm;
 use app\models\forms\NewRefundForm;
@@ -1161,17 +1163,18 @@ class AdministratorController extends Controller
     }
 
     /************************nouvelle contribution dans la mutuelle ****************************************************** */
-    public function actionNouvelleContribution($q = 0)
-    {
+    public function actionNouvelleContribution($q=0) {
         if ($q) {
             $help = Help::findOne($q);
             if ($help && $help->state) {
                 $model = new NewContributionForm();
-                $model->help_id = $q;
-                return $this->render("new_contribution", compact("model"));
-            } else
+                $model->help_id =$q;
+                return $this->render("new_contribution",compact("model"));
+            }
+            else
                 return RedirectionManager::abort($this);
-        } else
+        }
+        else
             return RedirectionManager::abort($this);
     }
 
@@ -1632,7 +1635,7 @@ class AdministratorController extends Controller
                             $tontine->save();
 
                             foreach ($members as $member) {
-                                $contribution = new Contribution();
+                                $contribution = new ContributionTontine();
                                 $contribution->state = false;
                                 $contribution->member_id = $member->id;
                                 $contribution->tontine_id = $tontine->id;
@@ -1665,7 +1668,7 @@ class AdministratorController extends Controller
         if ($q) {
             $tontine = Tontine::findOne($q);
             if ($tontine && $tontine->state) {
-                $model = new NewContributionForm();
+                $model = new NewContributionTontineForm();
                 $model->tontine_id = $q;
                 return $this->render("new_contribution_tontine", compact("model"));
             } else
@@ -1678,12 +1681,12 @@ class AdministratorController extends Controller
     public function actionAjouterContributionTontine()
     {
         if (Yii::$app->request->getIsPost()) {
-            $model = new NewContributionForm();
+            $model = new NewContributionTontineForm();
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
                 $member = Member::findOne($model->member_id);
                 $tontine = Tontine::findOne($model->tontine_id);
                 if ($member && $tontine && $tontine->state) {
-                    $contribution = Contribution::findOne(['member_id' => $model->member_id, 'tontine_id' => $model->tontine_id]);
+                    $contribution = ContributionTontine::findOne(['member_id' => $model->member_id, 'tontine_id' => $model->tontine_id]);
                     if ($contribution && !$contribution->state) {
                         $contribution->state = true;
                         $contribution->date = $model->date;
@@ -1716,7 +1719,7 @@ class AdministratorController extends Controller
             $model = new TontineTypeForm();
 
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-                $tontineType = HelpTypeForm::findOne($model->id);
+                $tontineType = TontineTypeForm::findOne($model->id);
                 $tontineType->title = $model->title;
                 $tontineType->amount = $model->amount;
                 $tontineType->save();

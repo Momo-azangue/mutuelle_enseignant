@@ -1,9 +1,9 @@
-new_contribution.php<?php $this->beginBlock('title') ?>
-    Nouvelle contribution
+<?php $this->beginBlock('title') ?>
+Nouvelle contribution
 <?php $this->endBlock() ?>
 <?php $this->beginBlock('style') ?>
-    <style>
-    </style>
+<style>
+</style>
 <?php $this->endBlock() ?>
 
 <div class="container mt-5 mb-5">

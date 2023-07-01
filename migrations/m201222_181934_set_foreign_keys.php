@@ -45,7 +45,7 @@ class m201222_181934_set_foreign_keys extends Migration
         $this->addForeignKey('tontine_tontine_type_id','tontine','help_type_id','help_type','id');
         $this->addForeignKey('tontine_member_id','tontine','member_id','member','id');
         
-        $this->addForeignKey('contribution_tontine_id','contribution','help_id','help','id');
+        $this->addForeignKey('contribution_tontine_id','contribution_tontine','tontine_id','tontine','id');
         $this->addForeignKey('contribution_member_id','contribution','member_id','member','id');
         $this->addForeignKey('contribution_administrator_id','contribution','administrator_id','administrator','id');
 

@@ -22,7 +22,4 @@ class Contribution extends ActiveRecord
     public function help() {
         return Help::findOne($this->help_id);
     }
-    public function  tontine(){
-        return Tontine::findOne($this->tontine_id);
-    }
 }

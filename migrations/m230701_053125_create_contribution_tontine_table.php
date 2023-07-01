@@ -18,6 +18,7 @@ class m230701_053125_create_contribution_tontine_table extends Migration
             'date' => $this->dateTime(),
             'state' => $this->boolean()->defaultValue(false),
             'created_at' => $this->dateTime()->defaultExpression('CURRENT_TIMESTAMP'),
+            'tontine_id' => $this->integer()->unsigned(),
             'administrator_id' => $this->integer()->unsigned()
         ]);
     }

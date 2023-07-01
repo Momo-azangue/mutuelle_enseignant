@@ -19,7 +19,7 @@ new_contribution.php<?php $this->beginBlock('title') ?>
             'method' => 'post'
         ]);
 
-        $members = \app\models\Contribution::find()->where(['tontine_id' =>$model->tontine_id,'state' => false])->select('member_id')->column();
+        $members = \app\models\ContributionTontine::find()->where(['tontine_id' =>$model->tontine_id,'state' => false])->select('member_id')->column();
 
         $members = \app\models\Member::findAll(['id' => $members]);
 

@@ -8,15 +8,15 @@ class Tontine extends ActiveRecord
 {
 
     public function contributions() {
-        return Contribution::findAll(['tontine_id'=> $this->id,'state' => true]);
+        return ContributionTontine::findAll(['tontine_id'=> $this->id,'state' => true]);
     }
 
     public function waitedContributions() {
-        return Contribution::findAll(['tontine_id'=> $this->id,'state' => false]);
+        return ContributionTontine::findAll(['tontine_id'=> $this->id,'state' => false]);
     }
 
     public function contributedAmount() {
-        return Contribution::find()->where(['tontine_id' => $this->id,'state' => true])->count() * $this->unit_amount;
+        return ContributionTontine::find()->where(['tontine_id' => $this->id,'state' => true])->count() * $this->unit_amount;
     }
 
     public function member() {
